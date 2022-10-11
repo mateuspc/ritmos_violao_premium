@@ -41,6 +41,10 @@ class BlocPageLogin with BlocCommon{
       }
   );
 
+  final _isObscureText = BehaviorSubject<bool>.seeded(true);
+  Stream<bool> get streamObscureText => _isLoading.stream;
+  Sink<bool> get sinkObscureText => _isLoading.sink;
+
   validateEmailOnly(){
     _email.add(_email.value);
   }

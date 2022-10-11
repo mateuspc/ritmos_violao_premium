@@ -48,7 +48,7 @@ class CustomTextFieldReponsive extends StatefulWidget {
     this.prefixIcon,
     this.margin,
     this.inputs,
-    this.cursorColor = ColorsApp.primary,
+    this.cursorColor = Colors.blue,
     required this.labelText,
     this.maxLines = 1,
     this.maxLength,
@@ -206,9 +206,9 @@ class _CustomTextFieldReponsiveState extends State<CustomTextFieldReponsive> wit
                       padding: EdgeInsets.zero,
                       margin: EdgeInsets.only(right: size.width * 0.01),
                       child: SvgPicture.asset(
-                        widget.obscureText ? "assets/icones/icone_olho.svg" : "assets/icones/icone_olho_fechado.svg",
+                        widget.obscureText ? "assets/imagens/icone_olho.svg" : "assets/imagens/icone_olho_fechado.svg",
                         color: widget.validator ? Colors.red :
-                        widget.focusNode.hasFocus ? ColorsApp.primary : Colors.black,
+                        widget.focusNode.hasFocus ? Colors.blue : Colors.black,
                       ),
                     ):
                     Container(
@@ -216,9 +216,9 @@ class _CustomTextFieldReponsiveState extends State<CustomTextFieldReponsive> wit
                           bottom: getReferenceHeight(context) * 0.28,
                           right: getReferenceHeight(context) * 0.13),
                       child: SvgPicture.asset(
-                        widget.obscureText ? "assets/icones/icone_olho.svg" : "assets/icones/icone_olho_fechado.svg",
+                        widget.obscureText ? "assets/imagens/icone_olho.svg" : "assets/imagens/icone_olho_fechado.svg",
                         color: widget.validator ? Colors.red :
-                        widget.focusNode.hasFocus ? ColorsApp.primary : Colors.black,
+                        widget.focusNode.hasFocus ? Colors.blue : Colors.black,
                       ),
                     ),
                   ) : widget.suffixIcon != null ?
@@ -228,7 +228,7 @@ class _CustomTextFieldReponsiveState extends State<CustomTextFieldReponsive> wit
                     child: SvgPicture.asset(
                       '${widget.suffixIcon}',
                       color: widget.validator ? Colors.red :
-                      widget.focusNode.hasFocus ? ColorsApp.primary : Colors.black,
+                      widget.focusNode.hasFocus ? Colors.blue : Colors.black,
                     ),
                   )
                   : null,

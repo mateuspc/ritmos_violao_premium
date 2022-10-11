@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "333114167316",
+    "project_id": "ritmos-de-violao-ab134",
+    "storage_bucket": "ritmos-de-violao-ab134.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:333114167316:android:a364ed8cc22f0f32a85701",
+        "android_client_info": {
+          "package_name": "br.com.devfull.cursodeviolao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "333114167316-g4ia1qgl66rqteqbtp9gjf8trhhd4cq9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_8-dra1_qkqKI4RAgFT0DKypc3m7lzWQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "333114167316-g4ia1qgl66rqteqbtp9gjf8trhhd4cq9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "333114167316-681vqmctcermcpkep63jdtenddpe45mb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.ritmosdeviolaoMv"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -78,7 +78,8 @@ class _PageEsqueciMinhaSenhaState extends State<PageEsqueciMinhaSenha> {
                      _blocEsqueciMinhaSenha.sendPasswordResetEmail(_emailController.text);
                      _showDefaultDialog(context,
                          title: "Sucesso!",
-                         subtitle: "Instruções de redefinição de senha enviado para o email cadastrado").then((value) => Navigator.pop(context));
+                         subtitle: "Instruções de redefinição de senha enviado para o email cadastrado")
+                         .then((value) => Navigator.pop(context));
                    }
 
                  },

@@ -1,0 +1,4 @@
+enum TypeIndicatorList {
+  CIRCLE,
+  CHAT
+}

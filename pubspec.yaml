@@ -1,0 +1,109 @@
+name: ritmos_de_violao_premium
+description: Ritmos de violão premium
+
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.17.1 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  url_launcher: ^6.1.6
+  font_awesome_flutter: ^10.2.1
+  share_plus: ^4.5.2
+  package_info_plus: ^1.4.3+1
+  pod_player: ^0.1.0
+  auto_size_text: ^3.0.0
+  cached_network_image:
+  flutter_svg: ^1.1.5
+  cupertino_icons: ^1.0.2
+  firebase_core:
+  firebase_storage: ^10.3.0
+  cloud_firestore: ^3.5.1
+  shimmer: ^2.0.0
+  rxdart: ^0.27.5
+  sign_in_with_apple: ^4.1.0
+  google_sign_in: ^5.4.1
+  firebase_auth: ^3.6.4
+  flutter_facebook_auth: ^4.4.1
+  localstorage: ^4.0.0+1
+  mask_text_input_formatter: ^2.3.0
+  validators: ^3.0.0
+  brasil_fields: ^1.3.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # The "flutter_lints" package below contains a set of recommended lints to
+  # encourage good coding practices. The lint set provided by the package is
+  # activated in the `analysis_options.yaml` file located at the root of your
+  # package. See that file for information about deactivating specific lint
+  # rules and activating additional ones.
+  flutter_lints: ^2.0.0
+  change_app_package_name:
+  purchases_flutter:
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter packages.
+flutter:
+
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/icone/
+    - assets/imagens/icone_botao_play.svg
+    - assets/imagens/play.png
+    - assets/imagens/icone_olho_fechado.svg
+    - assets/imagens/icone_olho.svg
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  fonts:
+    - family: Co Headline Bold
+      fonts:
+        - asset: assets/fonts/Co Headline Bold.ttf
+    - family: Co Headline Light
+      fonts:
+        - asset: assets/fonts/Co Headline Corp Light.ttf
+    - family: Co Headline W01 Regular
+      fonts:
+        - asset: assets/fonts/Co Headline W01 Regular.ttf
+    - family: Mulish Regular
+      fonts:
+        - asset: assets/fonts/Mulish-Regular.ttf
+    - family: Mulish Bold
+      fonts:
+        - asset: assets/fonts/Mulish-Bold.ttf
+    - family: Mulish SemiBold
+      fonts:
+        - asset: assets/fonts/Mulish-SemiBold.ttf
+    - family: Montserrat Bold
+      fonts:
+        - asset: assets/fonts/Montserrat-Bold.otf
+    - family: Montserrat Regular
+      fonts:
+        - asset: assets/fonts/Montserrat-Regular.otf
+    - family: Montserrat Light
+      fonts:
+        - asset: assets/fonts/Montserrat-Light.ttf
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages

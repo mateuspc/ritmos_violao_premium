@@ -85,27 +85,38 @@ class _PageLoginState extends State<PageLogin> {
               child: SizedBox(height: getReferenceHeight(context) * 0.2,),
             ),
             SliverToBoxAdapter(
-                child: StreamBuilder<String>(
-                  stream: _blocPageLogin.senha,
-                  initialData: "",
+                child: StreamBuilder<bool>(
+                  initialData: true,
+                  stream: _blocPageLogin.streamObscureText,
                   builder: (context, snapshot) {
-                    return CustomTextFieldReponsive(
-                      controller: _senhaController,
-                      hintText: 'Senha',
-                      labelText: 'Senha',
-                      obscureText: true,
-                      onSubmmited: () {  },
-                      validator: _blocPageLogin.validatorStr(snapshot),
-                      errorText: _blocPageLogin.errorTextStr(snapshot),
-                      changeText: (String text) {
-                        _blocPageLogin.validateEmailOnly();
-                        _blocPageLogin.sinkSenha.add(text);
-                      },
-                      focusNode: _focusNodeSenha,
-                      onFocus: (bool value) {  },
-                      onTap: () {  },
-                      onTapTrealing: () {  },
-                      textInputType: TextInputType.visiblePassword,
+
+                    bool obscureText = snapshot.data ?? true;
+                    return StreamBuilder<String>(
+                      stream: _blocPageLogin.senha,
+                      initialData: "",
+                      builder: (context, snapshot) {
+                        return CustomTextFieldReponsive(
+                          controller: _senhaController,
+                          hintText: 'Senha',
+                          labelText: 'Senha',
+                          obscureText: obscureText,
+                          onSubmmited: () {  },
+                          isPasswordField: true,
+                          validator: _blocPageLogin.validatorStr(snapshot),
+                          errorText: _blocPageLogin.errorTextStr(snapshot),
+                          changeText: (String text) {
+                            _blocPageLogin.validateEmailOnly();
+                            _blocPageLogin.sinkSenha.add(text);
+                          },
+                          focusNode: _focusNodeSenha,
+                          onFocus: (bool value) {  },
+                          onTap: () {  },
+                          onTapTrealing: () {
+                            _blocPageLogin.sinkObscureText.add(!obscureText);
+                          },
+                          textInputType: TextInputType.visiblePassword,
+                        );
+                      }
                     );
                   }
                 )
@@ -116,6 +127,7 @@ class _PageLoginState extends State<PageLogin> {
             SliverToBoxAdapter(
               child: ElevatedButtonCustom(
                 onPressed: () async {
+                  _blocPageLogin.sinkObscureText.add(true);
                   _blocPageLogin.validateFields();
                    Stream<bool> lastDateValidator = _blocPageLogin.submitValidForm;
 
@@ -151,6 +163,7 @@ class _PageLoginState extends State<PageLogin> {
                          break;
                      }
                    }
+                  _blocPageLogin.sinkObscureText.add(true);
 
                 },
                 text: 'Entrar',
