@@ -23,6 +23,7 @@ class VideoCarousel extends StatelessWidget {
   final Function(TypeViewMore) onTapViewMore;
   final bool showSubmodules;
 
+
   @override
   Widget build(BuildContext context) {
 

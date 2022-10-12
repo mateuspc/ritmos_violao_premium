@@ -31,14 +31,17 @@ class _PageSplashScreenState extends State<PageSplashScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _blocPageSplash.initPurchaseInApp().then((value) {
-      User? currentUser = FirebaseAuth.instance.currentUser;
-      if(currentUser != null){
-        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_HOME, (route) => false);
-      }else{
-        Navigator.pushReplacementNamed(context, AppRoutes.PAGE_LOGIN);
-      }
-    });
+     Timer(
+       Duration(seconds: 4),
+         (){
+           User? currentUser = FirebaseAuth.instance.currentUser;
+           if(currentUser != null){
+             Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_HOME, (route) => false);
+           }else{
+             Navigator.pushReplacementNamed(context, AppRoutes.PAGE_LOGIN);
+           }
+         }
+     );
   }
 
   @override

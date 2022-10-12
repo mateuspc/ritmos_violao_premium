@@ -20,5 +20,6 @@ class AppRoutes{
   static const PAGE_LOGIN = "/page_login";
   static const PAGE_CADASTRO = "/page_cadastro";
   static const PAGE_ESQUECI_MINHA_SENHA = "/page_esqueci_minha_senha";
+  static const PAGE_OPEN_LINK_WEBVIEW = "/page_open_link_webview";
 
 }
