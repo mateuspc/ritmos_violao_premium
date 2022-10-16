@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,11 +8,12 @@ import 'package:ritmos_de_violao_premium/models/api_response.dart';
 import 'package:ritmos_de_violao_premium/models/categoria.dart';
 import 'package:ritmos_de_violao_premium/models/ritmo.dart';
 import 'package:ritmos_de_violao_premium/pages/page_splash/bloc/bloc_page_splash.dart';
+import 'package:ritmos_de_violao_premium/pages/paywall/models/singleton_data.dart';
 import 'package:ritmos_de_violao_premium/pages/paywall/page_paywall.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/styles/app_fonts.dart';
 import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
-import 'package:ritmos_de_violao_premium/utils/funcoes_menu.dart';
+import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
 import 'package:shimmer/shimmer.dart';
 import '../shapes/draw_arrow.dart';
 
@@ -25,19 +27,68 @@ class PageRitmos extends StatefulWidget {
 class _PageRitmosState extends State<PageRitmos> {
   late List<Ritmo> _ritmos;
   late BlocPageSplash _blocPageSplash;
-
+  bool isFirstAccess = true;
   @override
   void initState() {
     super.initState();
     _ritmos = RitmosData.getAllRitmos();
-
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
     _blocPageSplash = Provider.of<BlocPageSplash>(context);
-    _blocPageSplash.initPurchaseInApp();
+    if(!AppData().entitlementIsActive){
+      _blocPageSplash.initPurchaseInApp().then((value) async {
+        var res = ((value).codeEnum) as TypeReturnPurchase;
+        switch (res) {
+          case TypeReturnPurchase.TEM_DIREITO:
+            break;
+          case TypeReturnPurchase.NAO_TEM_OFERTA_DISPONIVEL:
+            break;
+          case TypeReturnPurchase.NAO_TEM_DIREITO_E_TEM_OFERTA:
+            var screenWidth = (window.physicalSize.shortestSide / window.devicePixelRatio);
+            var screenHeight = (window.physicalSize.longestSide / window.devicePixelRatio);
+            await showModalBottomSheet(
+              useRootNavigator: true,
+              isDismissible: false,
+              isScrollControlled: true,
+              backgroundColor: Colors.white,
+              enableDrag: false,
+              shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(25.0)),
+              ),
+              context: context,
+              builder: (BuildContext context) {
+                return StatefulBuilder(
+                    builder: (BuildContext context, StateSetter setModalState) {
+                      return ClipRRect(
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            topRight: Radius.circular(10)),
+                        child: SizedBox(
+                          height: screenHeight * 0.90,
+                          child: Paywall(
+                            // offering: _blocPageSplash.offerings!.all.entries.first.value,
+                            offering: _blocPageSplash.offerings!.current!,
+                          ),
+                        ),
+                      );
+                    });
+              },
+            );
+            break;
+          case TypeReturnPurchase.FAIL:
+            break;
+          case TypeReturnPurchase.SOCKET_EXCEPTION:
+            break;
+          case TypeReturnPurchase.TIMEOUT_EXCEPTION:
+            break;
+        }
+      });
+    }
+
   }
 
   @override
@@ -45,358 +96,431 @@ class _PageRitmosState extends State<PageRitmos> {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
-    return _body(width, height);
-  }
-
-  _body(double width, double height) {
-
-    return StreamBuilder<bool>(
-      initialData: true,
-      stream: _blocPageSplash.streamLoading,
-      builder: (context, snapshot) {
-
-        bool loading = snapshot.data ?? true;
-
-        if(loading){
-          return _loadingDefaultRitmos();
-        }
-        return StreamBuilder<ApiResponse>(
-          stream: _blocPageSplash.streamResponse,
+    return Scaffold(
+      appBar: CustomToolbarNotSliver(
+          context: context,
+          colorLeadingIcon: Colors.blue,
+          backgroundColor: Colors.white,
+          onTapLeading: (){
+            Navigator.pop(context);
+          }, title: "Levadas", onActionClicked: () {  }),
+      body: StreamBuilder<bool>(
+          initialData: true,
+          stream: _blocPageSplash.streamLoading,
           builder: (context, snapshot) {
+            bool loading = snapshot.data ?? true;
 
-            if(snapshot.data == null){
+            if (loading) {
               return _loadingDefaultRitmos();
             }
-            ApiResponse response = (snapshot.data as ApiResponse);
-            TypeReturnPurchase typeReturnPurchase = response.codeEnum as TypeReturnPurchase;
-            print(typeReturnPurchase);
-
-            switch(typeReturnPurchase){
-              case TypeReturnPurchase.TEM_DIREITO:
-
-                for(int i = 0; i < _ritmos.length; i++){
-                    _ritmos[i].isLocked = false;
-                }
-                return ListView.separated(
-                    itemCount: _ritmos.length,
-                    separatorBuilder: (context, index) {
-                      return Divider(height: 1);
-                    },
-                    itemBuilder: (context, index) {
-                      double heightListTileRitmo = getListTileRitmoHeight(context);
-                      double paddingHorizontal = heightListTileRitmo * 0.05;
-                      double paddingVertical = heightListTileRitmo * 0;
-
-                      return GestureDetector(
-                        onTap: () async {
-                          if (_ritmos[index].isLocked) {
-                            // current offering is available, show paywall
-                            await showModalBottomSheet(
-                              useRootNavigator: true,
-                              isDismissible: false,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.white,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(25.0)),
-                              ),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return StatefulBuilder(builder:
-                                    (BuildContext context, StateSetter setModalState) {
-                                  return Paywall(
-                                    // offering: _blocPageSplash.offerings!.all.entries.first.value,
-                                    offering: _blocPageSplash.offerings!.current!,
-                                  );
-                                });
-                              },
-                            );
-                          } else {
-                            Navigator.pushNamed(context, AppRoutes.PAGE_DETAILS,
-                                arguments: _ritmos[index]);
-                          }
-                        },
-                        child: Container(
-                          height: heightListTileRitmo,
-                          color: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                              vertical: paddingVertical, horizontal: paddingHorizontal),
-                          child: LayoutBuilder(builder: (context, constraints) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Levada #${index + 1}',
-                                        style: TextStyle(
-                                            fontSize: constraints.maxHeight * 0.1,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Spacer(),
-                                      if (_ritmos[index].isLocked)
-                                        Icon(FontAwesomeIcons.lock,
-                                            size: getReferenceHeight(context) * 0.33)
-                                    ],
-                                  ),
-                                ),
-                                if (_ritmos[index].arrows.isNotEmpty)
-                                  Center(
-                                    child: Container(
-                                      child: FittedBox(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: _ritmos[index]
-                                              .arrows
-                                              .map(
-                                                (e) => CustomPaint(
-                                              painter: DrawArrow(
-                                                  mascada: e.mascada,
-                                                  down: e.down,
-                                                  color: e.color,
-                                                  mascadaColor: e.mascadaColor,
-                                                  borderColor: e.borderColor,
-                                                  borderStrokeWidthFraction:
-                                                  e.borderStrokeWidthFraction,
-                                                  backgroundColor: e.backgroundColor),
-                                              child: Container(
-                                                width: constraints.maxHeight * 0.2,
-                                                height: constraints.maxHeight * 0.35,
-                                              ),
-                                            ),
-                                          )
-                                              .toList(),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                else
-                                  Container(
-                                    height: getReferenceHeight(context),
-                                    child: Center(
-                                      child: FittedBox(
-                                        child: Text(
-                                          _ritmos[index].sequenciaDedilhado,
-                                          style: TextStyle(
-                                              fontSize: getReferenceHeight(context) * 0.5),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Wrap(
-                                    spacing: 10,
-                                    runSpacing: 10,
-                                    crossAxisAlignment: WrapCrossAlignment.end,
-                                    alignment: WrapAlignment.end,
-                                    children: buildCategoriaRitmo(
-                                        _ritmos[index].categorias, height),
-                                  ),
-                                ),
-                                Container(height: constraints.maxHeight * 0.01
-                                  // child: SizedBox(height: constraints.maxHeight * 0.01)
-                                ),
-                                Container(
-                                  height: constraints.maxHeight * 0.13,
-                                  width: constraints.maxWidth,
-                                  alignment: Alignment.centerLeft,
-                                  child: FittedBox(
-                                    child: Text(
-                                      '${_ritmos[index].feitoPor.contains('Thayna') ? 'Professora:' : 'Instrutor:'} ${_ritmos[index].feitoPor}',
-                                      style: TextStyle(
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: constraints.maxHeight * 0.1,
-                                          color: Colors.grey[400]),
-                                    ),
-                                  ),
-                                )
-                              ],
-                            );
-                          }),
-                        ),
-                      );
-                    });
-              case TypeReturnPurchase.NAO_TEM_OFERTA_DISPONIVEL:
-
-                break;
-              case TypeReturnPurchase.NAO_TEM_DIREITO_E_TEM_OFERTA:
-
-                for(int i = 0; i < _ritmos.length; i++){
-                  if(i > 4){
-                    _ritmos[i].isLocked = true;
+            return StreamBuilder<ApiResponse>(
+                stream: _blocPageSplash.streamResponse,
+                builder: (context, snapshot) {
+                  if (snapshot.data == null) {
+                    return _loadingDefaultRitmos();
                   }
-                }
-                return ListView.separated(
-                    itemCount: _ritmos.length,
-                    separatorBuilder: (context, index) {
-                      return Divider(height: 1);
-                    },
-                    itemBuilder: (context, index) {
-                      double heightListTileRitmo = getListTileRitmoHeight(context);
-                      double paddingHorizontal = heightListTileRitmo * 0.05;
-                      double paddingVertical = heightListTileRitmo * 0;
+                  ApiResponse response = (snapshot.data as ApiResponse);
+                  TypeReturnPurchase typeReturnPurchase =
+                  response.codeEnum as TypeReturnPurchase;
+                  print(typeReturnPurchase);
 
-                      return GestureDetector(
-                        onTap: () async {
-                          if (_ritmos[index].isLocked) {
-                            // current offering is available, show paywall
-                            await showModalBottomSheet(
-                              useRootNavigator: true,
-                              isDismissible: true,
-                              isScrollControlled: true,
-                              backgroundColor: Colors.white,
-                              enableDrag: false,
-                              shape: const RoundedRectangleBorder(
-                                borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(25.0)),
-                              ),
-                              context: context,
-                              builder: (BuildContext context) {
-                                return StatefulBuilder(builder:
-                                    (BuildContext context, StateSetter setModalState) {
-                                  return ClipRRect(
-                                    borderRadius: BorderRadius.only(topLeft: Radius.circular(10),
-                                        topRight:Radius.circular(10)),
-                                    child: SizedBox(
-                                      height: height * 0.90,
-                                      child: Paywall(
-                                        // offering: _blocPageSplash.offerings!.all.entries.first.value,
-                                        offering: _blocPageSplash.offerings!.current!,
-                                      ),
+                  switch (typeReturnPurchase) {
+                    case TypeReturnPurchase.TEM_DIREITO:
+                      for (int i = 0; i < _ritmos.length; i++) {
+                        _ritmos[i].isLocked = false;
+                      }
+                      return ListView.separated(
+                          itemCount: _ritmos.length,
+                          separatorBuilder: (context, index) {
+                            return Divider(height: 1);
+                          },
+                          itemBuilder: (context, index) {
+                            double heightListTileRitmo =
+                            getListTileRitmoHeight(context);
+                            double paddingHorizontal = heightListTileRitmo * 0.05;
+                            double paddingVertical = heightListTileRitmo * 0;
+
+                            return GestureDetector(
+                              onTap: () async {
+                                if (_ritmos[index].isLocked) {
+                                  // current offering is available, show paywall
+                                  await showModalBottomSheet(
+                                    useRootNavigator: true,
+                                    isDismissible: false,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.white,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(25.0)),
                                     ),
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return StatefulBuilder(builder:
+                                          (BuildContext context,
+                                          StateSetter setModalState) {
+                                        return Paywall(
+                                          // offering: _blocPageSplash.offerings!.all.entries.first.value,
+                                          offering:
+                                          _blocPageSplash.offerings!.current!,
+                                        );
+                                      });
+                                    },
                                   );
-                                });
+                                } else {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.PAGE_DETAILS,
+                                      arguments: _ritmos[index]);
+                                }
                               },
-                            );
-                          } else {
-                            Navigator.pushNamed(context, AppRoutes.PAGE_DETAILS,
-                                arguments: _ritmos[index]);
-                          }
-                        },
-                        child: Container(
-                          height: heightListTileRitmo,
-                          color: Colors.white,
-                          padding: EdgeInsets.symmetric(
-                              vertical: paddingVertical, horizontal: paddingHorizontal),
-                          child: LayoutBuilder(builder: (context, constraints) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        'Levada #${index + 1}',
-                                        style: TextStyle(
-                                            fontSize: constraints.maxHeight * 0.1,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                      Spacer(),
-                                      if (_ritmos[index].isLocked)
-                                        Icon(FontAwesomeIcons.lock,
-                                            size: getReferenceHeight(context) * 0.33)
-                                    ],
-                                  ),
-                                ),
-                                if (_ritmos[index].arrows.isNotEmpty)
-                                  Center(
-                                    child: Container(
-                                      child: FittedBox(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: _ritmos[index]
-                                              .arrows
-                                              .map(
-                                                (e) => CustomPaint(
-                                              painter: DrawArrow(
-                                                  mascada: e.mascada,
-                                                  down: e.down,
-                                                  color: e.color,
-                                                  mascadaColor: e.mascadaColor,
-                                                  borderColor: e.borderColor,
-                                                  borderStrokeWidthFraction:
-                                                  e.borderStrokeWidthFraction,
-                                                  backgroundColor: e.backgroundColor),
+                              child: Container(
+                                height: heightListTileRitmo,
+                                color: Colors.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: paddingVertical,
+                                    horizontal: paddingHorizontal),
+                                child: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Levada #${index + 1}',
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                      constraints.maxHeight * 0.1,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Spacer(),
+                                                if (_ritmos[index].isLocked)
+                                                  Icon(FontAwesomeIcons.lock,
+                                                      size: getReferenceHeight(
+                                                          context) *
+                                                          0.33)
+                                              ],
+                                            ),
+                                          ),
+                                          if (_ritmos[index].arrows.isNotEmpty)
+                                            Center(
                                               child: Container(
-                                                width: constraints.maxHeight * 0.2,
-                                                height: constraints.maxHeight * 0.35,
+                                                child: FittedBox(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                    children: _ritmos[index]
+                                                        .arrows
+                                                        .map(
+                                                          (e) => CustomPaint(
+                                                        painter: DrawArrow(
+                                                            mascada: e.mascada,
+                                                            down: e.down,
+                                                            color: e.color,
+                                                            mascadaColor:
+                                                            e.mascadaColor,
+                                                            borderColor:
+                                                            e.borderColor,
+                                                            borderStrokeWidthFraction: e
+                                                                .borderStrokeWidthFraction,
+                                                            backgroundColor: e
+                                                                .backgroundColor),
+                                                        child: Container(
+                                                          width: constraints
+                                                              .maxHeight *
+                                                              0.2,
+                                                          height: constraints
+                                                              .maxHeight *
+                                                              0.35,
+                                                        ),
+                                                      ),
+                                                    )
+                                                        .toList(),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          else
+                                            Container(
+                                              height: getReferenceHeight(context),
+                                              child: Center(
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    _ritmos[index].sequenciaDedilhado,
+                                                    style: TextStyle(
+                                                        fontSize: getReferenceHeight(
+                                                            context) *
+                                                            0.5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Wrap(
+                                              spacing: 10,
+                                              runSpacing: 10,
+                                              crossAxisAlignment:
+                                              WrapCrossAlignment.end,
+                                              alignment: WrapAlignment.end,
+                                              children: buildCategoriaRitmo(
+                                                  _ritmos[index].categorias, height),
+                                            ),
+                                          ),
+                                          Container(
+                                              height: constraints.maxHeight * 0.01
+                                            // child: SizedBox(height: constraints.maxHeight * 0.01)
+                                          ),
+                                          Container(
+                                            height: constraints.maxHeight * 0.13,
+                                            width: constraints.maxWidth,
+                                            alignment: Alignment.centerLeft,
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${_ritmos[index].feitoPor.contains('Thayna') ? 'Professora:' : 'Instrutor:'} ${_ritmos[index].feitoPor}',
+                                                style: TextStyle(
+                                                    fontStyle: FontStyle.italic,
+                                                    fontSize:
+                                                    constraints.maxHeight * 0.1,
+                                                    color: Colors.grey[400]),
                                               ),
                                             ),
                                           )
-                                              .toList(),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                else
-                                  Container(
-                                    height: getReferenceHeight(context),
-                                    child: Center(
-                                      child: FittedBox(
-                                        child: Text(
-                                          _ritmos[index].sequenciaDedilhado,
-                                          style: TextStyle(
-                                              fontSize: getReferenceHeight(context) * 0.5),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: Wrap(
-                                    spacing: 10,
-                                    runSpacing: 10,
-                                    crossAxisAlignment: WrapCrossAlignment.end,
-                                    alignment: WrapAlignment.end,
-                                    children: buildCategoriaRitmo(
-                                        _ritmos[index].categorias, height),
-                                  ),
-                                ),
-                                Container(height: constraints.maxHeight * 0.01
-                                  // child: SizedBox(height: constraints.maxHeight * 0.01)
-                                ),
-                                Container(
-                                  height: constraints.maxHeight * 0.13,
-                                  width: constraints.maxWidth,
-                                  alignment: Alignment.centerLeft,
-                                  child: FittedBox(
-                                    child: Text(
-                                      '${_ritmos[index].feitoPor.contains('Thayna') ? 'Professora:' : 'Instrutor:'} ${_ritmos[index].feitoPor}',
-                                      style: TextStyle(
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: constraints.maxHeight * 0.1,
-                                          color: Colors.grey[400]),
-                                    ),
-                                  ),
-                                )
-                              ],
+                                        ],
+                                      );
+                                    }),
+                              ),
                             );
-                          }),
-                        ),
-                      );
-                    });
-                case TypeReturnPurchase.FAIL:
-                // TODO: Handle this case.
-                break;
-              case TypeReturnPurchase.SOCKET_EXCEPTION:
-                // TODO: Handle this case.
-                break;
-              case TypeReturnPurchase.TIMEOUT_EXCEPTION:
-                // TODO: Handle this case.
-                break;
-            }
-           return Container();
-          }
-        );
-      }
+                          });
+                    case TypeReturnPurchase.NAO_TEM_OFERTA_DISPONIVEL:
+                      showCustomMessage(context,
+                          title: "Nenhuma oferta dísponivel",
+                          subtitle: "Entre em contato com o suporte",
+                          emojiPathImage: Icons.info_outline, onPressed: () {
+                            _blocPageSplash.initPurchaseInApp();
+                          });
+                      break;
+                    case TypeReturnPurchase.NAO_TEM_DIREITO_E_TEM_OFERTA:
+                      for (int i = 0; i < _ritmos.length; i++) {
+                        if (i > 4) {
+                          _ritmos[i].isLocked = true;
+                        }
+                      }
+                      return ListView.separated(
+                          itemCount: _ritmos.length,
+                          separatorBuilder: (context, index) {
+                            return Divider(height: 1);
+                          },
+                          itemBuilder: (context, index) {
+                            double heightListTileRitmo =
+                            getListTileRitmoHeight(context);
+                            double paddingHorizontal = heightListTileRitmo * 0.05;
+                            double paddingVertical = heightListTileRitmo * 0;
+
+                            return GestureDetector(
+                              onTap: () async {
+                                if (_ritmos[index].isLocked) {
+                                  // current offering is available, show paywall
+                                  await showModalBottomSheet(
+                                    useRootNavigator: true,
+                                    isDismissible: false,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.white,
+                                    enableDrag: false,
+                                    shape: const RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.vertical(
+                                          top: Radius.circular(25.0)),
+                                    ),
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return StatefulBuilder(builder:
+                                          (BuildContext context,
+                                          StateSetter setModalState) {
+                                        return ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(10),
+                                              topRight: Radius.circular(10)),
+                                          child: SizedBox(
+                                            height: height * 0.90,
+                                            child: Paywall(
+                                              // offering: _blocPageSplash.offerings!.all.entries.first.value,
+                                              offering: _blocPageSplash
+                                                  .offerings!.current!,
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                    },
+                                  );
+                                } else {
+                                  Navigator.pushNamed(
+                                      context, AppRoutes.PAGE_DETAILS,
+                                      arguments: _ritmos[index]);
+                                }
+                              },
+                              child: Container(
+                                height: heightListTileRitmo,
+                                color: Colors.white,
+                                padding: EdgeInsets.symmetric(
+                                    vertical: paddingVertical,
+                                    horizontal: paddingHorizontal),
+                                child: LayoutBuilder(
+                                    builder: (context, constraints) {
+                                      return Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            child: Row(
+                                              mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                              children: [
+                                                Text(
+                                                  'Levada #${index + 1}',
+                                                  style: TextStyle(
+                                                      fontSize:
+                                                      constraints.maxHeight * 0.1,
+                                                      fontWeight: FontWeight.bold),
+                                                ),
+                                                Spacer(),
+                                                if (_ritmos[index].isLocked)
+                                                  Icon(FontAwesomeIcons.lock,
+                                                      size: getReferenceHeight(
+                                                          context) *
+                                                          0.33)
+                                              ],
+                                            ),
+                                          ),
+                                          if (_ritmos[index].arrows.isNotEmpty)
+                                            Center(
+                                              child: Container(
+                                                child: FittedBox(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                    children: _ritmos[index]
+                                                        .arrows
+                                                        .map(
+                                                          (e) => CustomPaint(
+                                                        painter: DrawArrow(
+                                                            mascada: e.mascada,
+                                                            down: e.down,
+                                                            color: e.color,
+                                                            mascadaColor:
+                                                            e.mascadaColor,
+                                                            borderColor:
+                                                            e.borderColor,
+                                                            borderStrokeWidthFraction: e
+                                                                .borderStrokeWidthFraction,
+                                                            backgroundColor: e
+                                                                .backgroundColor),
+                                                        child: Container(
+                                                          width: constraints
+                                                              .maxHeight *
+                                                              0.2,
+                                                          height: constraints
+                                                              .maxHeight *
+                                                              0.35,
+                                                        ),
+                                                      ),
+                                                    )
+                                                        .toList(),
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          else
+                                            Container(
+                                              height: getReferenceHeight(context),
+                                              child: Center(
+                                                child: FittedBox(
+                                                  child: Text(
+                                                    _ritmos[index].sequenciaDedilhado,
+                                                    style: TextStyle(
+                                                        fontSize: getReferenceHeight(
+                                                            context) *
+                                                            0.5),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          Align(
+                                            alignment: Alignment.centerRight,
+                                            child: Wrap(
+                                              spacing: 10,
+                                              runSpacing: 10,
+                                              crossAxisAlignment:
+                                              WrapCrossAlignment.end,
+                                              alignment: WrapAlignment.end,
+                                              children: buildCategoriaRitmo(
+                                                  _ritmos[index].categorias, height),
+                                            ),
+                                          ),
+                                          Container(
+                                              height: constraints.maxHeight * 0.01
+                                            // child: SizedBox(height: constraints.maxHeight * 0.01)
+                                          ),
+                                          Container(
+                                            height: constraints.maxHeight * 0.13,
+                                            width: constraints.maxWidth,
+                                            alignment: Alignment.centerLeft,
+                                            child: FittedBox(
+                                              child: Text(
+                                                '${_ritmos[index].feitoPor.contains('Thayna') ? 'Professora:' : 'Instrutor:'} ${_ritmos[index].feitoPor}',
+                                                style: TextStyle(
+                                                    fontStyle: FontStyle.italic,
+                                                    fontSize:
+                                                    constraints.maxHeight * 0.1,
+                                                    color: Colors.grey[400]),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      );
+                                    }),
+                              ),
+                            );
+                          });
+                    case TypeReturnPurchase.FAIL:
+                      return showCustomMessage(context,
+                          title: "Internet não disponivel",
+                          subtitle:
+                          "Verifique sua conexão com a internet e tente novamente",
+                          emojiPathImage: Icons.info_outline, onPressed: () {
+                            _blocPageSplash.initPurchaseInApp();
+                          });
+                    case TypeReturnPurchase.SOCKET_EXCEPTION:
+                      return showCustomMessage(context,
+                          title: "Internet não disponivel",
+                          subtitle:
+                          "Verifique sua conexão com a internet e tente novamente",
+                          emojiPathImage: Icons.info_outline, onPressed: () {
+                            _blocPageSplash.initPurchaseInApp();
+                          });
+                    case TypeReturnPurchase.TIMEOUT_EXCEPTION:
+                      return showCustomMessage(context,
+                          title: "Internet não disponivel",
+                          subtitle:
+                          "Verifique sua conexão com a internet e tente novamente",
+                          emojiPathImage: Icons.info_outline, onPressed: () {
+                            _blocPageSplash.initPurchaseInApp();
+                          });
+                  }
+                  return showCustomMessage(context,
+                      title: "Internet não disponivel",
+                      subtitle:
+                      "Verifique sua conexão com a internet e tente novamente",
+                      emojiPathImage: Icons.info_outline, onPressed: () {
+                        _blocPageSplash.initPurchaseInApp();
+                      });
+                });
+          })
     );
   }
+
 
   List<Widget> buildCategoriaRitmo(List<Categoria> categorias, double height) {
     return categorias
@@ -437,8 +561,8 @@ class _PageRitmosState extends State<PageRitmos> {
               margin: EdgeInsets.only(
                   left: size.width * 0.05, right: size.width * 0.35),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                    getReferenceHeight(context) * 0.2),
+                borderRadius:
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -450,7 +574,7 @@ class _PageRitmosState extends State<PageRitmos> {
                   left: size.width * 0.05, right: size.width * 0.05),
               decoration: BoxDecoration(
                 borderRadius:
-                BorderRadius.circular(getReferenceHeight(context) * 0.2),
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -461,8 +585,8 @@ class _PageRitmosState extends State<PageRitmos> {
               margin: EdgeInsets.only(
                   left: size.width * 0.05, right: size.width * 0.35),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                    getReferenceHeight(context) * 0.2),
+                borderRadius:
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -474,7 +598,7 @@ class _PageRitmosState extends State<PageRitmos> {
                   left: size.width * 0.05, right: size.width * 0.05),
               decoration: BoxDecoration(
                 borderRadius:
-                BorderRadius.circular(getReferenceHeight(context) * 0.2),
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -485,8 +609,8 @@ class _PageRitmosState extends State<PageRitmos> {
               margin: EdgeInsets.only(
                   left: size.width * 0.05, right: size.width * 0.35),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                    getReferenceHeight(context) * 0.2),
+                borderRadius:
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -498,7 +622,7 @@ class _PageRitmosState extends State<PageRitmos> {
                   left: size.width * 0.05, right: size.width * 0.05),
               decoration: BoxDecoration(
                 borderRadius:
-                BorderRadius.circular(getReferenceHeight(context) * 0.2),
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -509,8 +633,8 @@ class _PageRitmosState extends State<PageRitmos> {
               margin: EdgeInsets.only(
                   left: size.width * 0.05, right: size.width * 0.35),
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                    getReferenceHeight(context) * 0.2),
+                borderRadius:
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -522,7 +646,7 @@ class _PageRitmosState extends State<PageRitmos> {
                   left: size.width * 0.05, right: size.width * 0.05),
               decoration: BoxDecoration(
                 borderRadius:
-                BorderRadius.circular(getReferenceHeight(context) * 0.2),
+                    BorderRadius.circular(getReferenceHeight(context) * 0.2),
                 color: Colors.white,
               ),
             ),
@@ -531,18 +655,23 @@ class _PageRitmosState extends State<PageRitmos> {
       ),
     );
   }
-
 }
 
-showCustomMessage(BuildContext context, {required String title, required String subtitle,
-  required String emojiPathImage, required VoidCallback onPressed}){
+showCustomMessage(BuildContext context,
+    {required String title,
+    required String subtitle,
+    required IconData emojiPathImage,
+    required VoidCallback onPressed}) {
   return Column(
     children: [
-      Expanded(child: Container(
+      Expanded(
+          child: Container(
         child: Center(
-          child: PageFeedbackDefault(title: title,
+          child: PageFeedbackDefault(
+            title: title,
             subtitle: subtitle,
-            emojiPathImage: emojiPathImage, margin: EdgeInsets.zero,
+            emojiPathImage: emojiPathImage,
+            margin: EdgeInsets.zero,
             onPressedTryAgain: () {
               onPressed();
             },
@@ -555,7 +684,7 @@ showCustomMessage(BuildContext context, {required String title, required String 
 }
 
 class PageFeedbackDefault extends StatelessWidget {
-  final String emojiPathImage;
+  final IconData emojiPathImage;
   final String title;
   final String subtitle;
   final EdgeInsets margin;
@@ -582,7 +711,7 @@ class PageFeedbackDefault extends StatelessWidget {
       subtitleSplit = subtitle.split(splitPattern);
     }
     return Container(
-      margin:  EdgeInsets.only(top: size.height * 0.03),
+      margin: EdgeInsets.only(top: size.height * 0.03),
       height: size.height * 0.62,
       width: size.width * 0.9,
       child: LayoutBuilder(
@@ -606,8 +735,12 @@ class PageFeedbackDefault extends StatelessWidget {
                       ],
                     ),
                     child: Padding(
-                      padding: EdgeInsets.all(getReferenceHeight(context) * 0.5),
-                      child: Image.asset(emojiPathImage),
+                      padding:
+                          EdgeInsets.all(getReferenceHeight(context) * 0.5),
+                      child: Icon(
+                        emojiPathImage,
+                        size: getReferenceHeight(context),
+                      ),
                     )),
               ),
               SizedBox(
@@ -641,7 +774,9 @@ class PageFeedbackDefault extends StatelessWidget {
                 RichText(
                   textAlign: TextAlign.center,
                   text: TextSpan(
-                      style: TextStyle(color: Colors.black, fontSize: getReferenceHeight(context) * 0.3),
+                      style: TextStyle(
+                          color: Colors.black,
+                          fontSize: getReferenceHeight(context) * 0.3),
                       children: <TextSpan>[
                         TextSpan(
                           text: subtitleSplit[0],
@@ -686,10 +821,12 @@ class PageFeedbackDefault extends StatelessWidget {
                     onPressed: () {
                       onPressedTryAgain();
                     },
-                    child: Text("Tentar novamente",
+                    child: Text(
+                      "Tentar novamente",
                       style: TextStyle(
-                          fontSize: getReferenceHeight(context) * 0.33
-                      ),),
+                          fontSize: getReferenceHeight(context) * 0.33,
+                          color: Colors.blue),
+                    ),
                   ),
                 ),
               )
@@ -700,4 +837,3 @@ class PageFeedbackDefault extends StatelessWidget {
     );
   }
 }
-

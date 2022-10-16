@@ -21,5 +21,10 @@ class AppRoutes{
   static const PAGE_CADASTRO = "/page_cadastro";
   static const PAGE_ESQUECI_MINHA_SENHA = "/page_esqueci_minha_senha";
   static const PAGE_OPEN_LINK_WEBVIEW = "/page_open_link_webview";
+  static const PAGE_RITMOS = "/page_ritmos";
+  static const PAGE_ACORDES = "/page_acordess";
+  static const PAGE_CURSO_LEVADAS = "/page_curso_levadas";
+  static const PAGE_DETALHES_AULA_LEVADA = "/page_detalhes_aula_levada";
+  static const PAGE_DEDILHADOS = "/page_dedilhados";
 
 }

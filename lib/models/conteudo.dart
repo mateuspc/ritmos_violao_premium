@@ -1,4 +1,3 @@
-import 'package:ritmos_de_violao_premium/models/leitura.dart';
 
 class Conteudo {
   String? uuid;
@@ -8,7 +7,6 @@ class Conteudo {
   List<String>? tags;
   String? thumbnail;
   String? conteudoRelacionado;
-  Leitura? leitura;
 
   Conteudo(
       {this.uuid,
@@ -16,7 +14,6 @@ class Conteudo {
         this.titulo,
         this.thumbnail,
         this.descricao,
-        this.leitura,
         this.tags,
         this.conteudoRelacionado});
 
@@ -38,9 +35,7 @@ class Conteudo {
     titulo = json['titulo'];
     descricao = json['descricao'];
     conteudoRelacionado = json["conteudo_relacionado"];
-    if(json["leitura"] != null){
-      leitura = Leitura.fromJson(json["leitura"]);
-    }
+
 
   }
 
@@ -56,7 +51,6 @@ class Conteudo {
     data['uuid'] = this.uuid;
     data['titulo'] = this.titulo;
     data["descricao"] = this.descricao;
-    data["leitura"] = this.leitura;
     return data;
   }
 }

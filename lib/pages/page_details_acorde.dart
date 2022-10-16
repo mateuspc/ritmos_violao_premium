@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:ritmos_de_violao_premium/models/acorde.dart';
 import 'package:ritmos_de_violao_premium/shapes/acorde_violao_shape.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
+import 'package:ritmos_de_violao_premium/styles/app_fontsize.dart';
+import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
 import 'package:ritmos_de_violao_premium/widgets/leading_app_bar.dart';
 import 'package:ritmos_de_violao_premium/widgets/title_app_bar.dart';
 
@@ -55,13 +57,14 @@ class _PageDetailsAcordeState extends State<PageDetailsAcorde> {
     var size = MediaQuery.of(context).size;
 
     return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: getToolbarHeight(context),
-        title: TitleAppBar(title: _acorde.nome),
-        leading: LeadingAppBar(onPressed: (){
-          Navigator.of(context).pop();
-        },),
-      ),
+      appBar: CustomToolbarNotSliver(
+          context: context,
+          colorLeadingIcon: Colors.orange,
+          backgroundColor: Colors.white,
+          onTapLeading: (){
+            Navigator.pop(context);
+          }, title: _acorde.nome, onActionClicked: () {  }),
+
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(

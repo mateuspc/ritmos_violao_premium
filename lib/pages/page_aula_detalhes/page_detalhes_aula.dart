@@ -128,23 +128,23 @@ class _PageDetalhesAulaState extends State<PageDetalhesAula> {
                                   fontSize: getReferenceHeight(context) * 0.23,
                                   fontWeight: FontWeight.w600
                               ),),
-                              if(conteudoRes.leitura != null)
-                              Container(
-                                decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black, width: 1),
-                                    borderRadius: BorderRadius.circular(6)
-                                ),
-                                child:  Padding(
-                                  padding:  EdgeInsets.all(8.0),
-                                  child: ListTile(
-                                    title: Text(conteudoRes.leitura!.titulo.toString(), style: TextStyle(
-                                        color: Colors.blue
-                                    ),),
-                                    trailing: Icon(Icons.link),
-                                    subtitle: Text(conteudoRes.leitura!.subtitulo.toString()),
-                                  ),
-                                ),
-                              )
+                              // if(conteudoRes.leitura != null)
+                              // Container(
+                              //   decoration: BoxDecoration(
+                              //       border: Border.all(color: Colors.black, width: 1),
+                              //       borderRadius: BorderRadius.circular(6)
+                              //   ),
+                              //   child:  Padding(
+                              //     padding:  EdgeInsets.all(8.0),
+                              //     child: ListTile(
+                              //       title: Text(conteudoRes.leitura!.titulo.toString(), style: TextStyle(
+                              //           color: Colors.blue
+                              //       ),),
+                              //       trailing: Icon(Icons.link),
+                              //       subtitle: Text(conteudoRes.leitura!.subtitulo.toString()),
+                              //     ),
+                              //   ),
+                              // )
                             ],
                           ),
                         );

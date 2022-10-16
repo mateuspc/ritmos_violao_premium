@@ -1,6 +1,10 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 import 'package:purchases_flutter/purchases_flutter.dart';
+import 'package:ritmos_de_violao_premium/models/api_response.dart';
+import 'package:ritmos_de_violao_premium/pages/page_splash/bloc/bloc_page_splash.dart';
 import 'package:ritmos_de_violao_premium/pages/paywall/constants/constants.dart';
 import 'package:ritmos_de_violao_premium/pages/paywall/models/singleton_data.dart';
 import 'package:ritmos_de_violao_premium/pages/termos_e_politicas/models/abrir_link_webview_model.dart';
@@ -18,6 +22,15 @@ class Paywall extends StatefulWidget {
 }
 
 class _PaywallState extends State<Paywall> {
+
+  late BlocPageSplash _blocPageSplash;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    _blocPageSplash = Provider.of<BlocPageSplash>(context);
+
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -50,7 +63,7 @@ class _PaywallState extends State<Paywall> {
             Container(
               height: 70.0,
               width: double.infinity,
-              decoration:  BoxDecoration(
+              decoration:  const BoxDecoration(
                   color: Colors.white,
                   borderRadius:
                   BorderRadius.vertical(top: Radius.circular(0))),
@@ -66,31 +79,37 @@ class _PaywallState extends State<Paywall> {
               padding:
               EdgeInsets.only(top: getReferenceHeight(context) * 0.2,
                   bottom: 16, left: 16.0, right: 16.0),
-              child: SizedBox(
+              child:  const SizedBox(
+                width: double.infinity,
                 child: Text(
                   'RITMOS DE VIOLÃO PREMIUM',
                   style: TextStyle(
                     color: Colors.black
                   ),
                 ),
-                width: double.infinity,
               ),
             ),
             ListView.builder(
               itemCount: widget.offering.availablePackages.length,
               itemBuilder: (BuildContext context, int index) {
                 var myProductList = widget.offering.availablePackages;
-                print("myProductList: ${myProductList}");
                 return Card(
-                  color: myProductList[index].packageType == PackageType.monthly ? Color(0xFF00AEEF) : Color(0xFF304FFE),
+                  color: myProductList[index].packageType == PackageType.monthly ? const Color(0xFF00AEEF) : const Color(0xFF304FFE),
                   child: ListTile(
                       onTap: () async {
                         try {
                           CustomerInfo customerInfo =
                           await Purchases.purchasePackage(
                               myProductList[index]);
-                          appData.entitlementIsActive = customerInfo
-                              .entitlements.all[entitlementID]!.isActive;
+                          appData.entitlementIsActive = customerInfo.entitlements.all[entitlementID]!.isActive;
+                          if(appData.entitlementIsActive){
+                            _blocPageSplash.sinkResponse.add(ApiResponse.ok(result: "",
+                                codeEnum: TypeReturnPurchase.TEM_DIREITO));
+                          }else{
+                            _blocPageSplash.sinkResponse.add(ApiResponse.ok(result: "",
+                                codeEnum: TypeReturnPurchase.NAO_TEM_DIREITO_E_TEM_OFERTA));
+                          }
+
                         } catch (e) {
                           print(e);
                         }
@@ -115,10 +134,36 @@ class _PaywallState extends State<Paywall> {
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
             ),
+             SizedBox(
+               height: getReferenceHeight(context),
+             ),
+             Center(
+               child: OutlinedButtonTheme(
+                 data: OutlinedButtonThemeData(
+                   style: ButtonStyle(
+                     surfaceTintColor: MaterialStateProperty.all(Colors.blue),
+                   )
+                 ),
+                 child: OutlinedButton(
+                     onPressed: () async {
+                       try {
+                        await Purchases.restorePurchases();
+                         appData.appUserID = await Purchases.appUserID;
+
+                       } on PlatformException catch (e) {
+
+                       }
+                     },
+                     child: const Text("Restaurar compras", style: TextStyle(
+                       color: Colors.blueGrey
+                     ),)),
+               ),
+             ),
              Padding(
               padding:
-              EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
+              const EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
               child: SizedBox(
+                width: double.infinity,
                 child: RichText(
                   text: TextSpan(
                     text: "Ao concluir a compra você concorda com os nossos ",
@@ -129,7 +174,7 @@ class _PaywallState extends State<Paywall> {
                     children: [
                       TextSpan(
                         text: "termos de uso",
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.blue,
                           decoration: TextDecoration.underline,
 
@@ -142,12 +187,12 @@ class _PaywallState extends State<Paywall> {
                               arguments: abrirLinkWebViewModel);
                         },
                       ),
-                      TextSpan(
+                      const TextSpan(
                         text: ' e '
                       ),
                       TextSpan(
                           text: 'politícas de privacidade.',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.blue,
                             decoration: TextDecoration.underline
                           ),
@@ -162,7 +207,6 @@ class _PaywallState extends State<Paywall> {
                     ]
                   ),
                 ),
-                width: double.infinity,
               ),
             ),
           ],

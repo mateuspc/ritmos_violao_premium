@@ -19,63 +19,150 @@ class _PageHomeState extends State<PageHome> {
   @override
   Widget build(BuildContext context) {
 
-    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      body: GridView(
 
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          title: Text('Ritmos de violão',
-             style: TextStyle(
-               fontSize: getReferenceHeight(context) * 0.4,
-               color: Colors.blue
-             ),),
-          bottom: TabBar(
-            labelColor: Colors.blue,
-            labelStyle: TextStyle(
-              fontSize: getReferenceHeight(context) * 0.30,
-            ),
-            indicatorColor: Colors.blue,
-            tabs: [
-              Tab(
-                  icon: Icon(FontAwesomeIcons.guitar,
-                   color: Colors.blue,
-                   size: getReferenceHeight(context) * 0.5,),
-                  text: 'Levadas'
-
-              ),
-              Tab(
-                icon: Icon(FontAwesomeIcons.video,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+        children: [
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, AppRoutes.PAGE_RITMOS);
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
                   color: Colors.blue,
-                  size: getReferenceHeight(context) * 0.5,),
-                text: 'Aulas '
-                    'violão',
-
-              ),
-              Tab(icon: Icon(FontAwesomeIcons.music,
-                 color: Colors.blue,
-                 size: getReferenceHeight(context) * 0.5,),
-                 text: 'Campo harmônico'),
-            ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.guitar,
+                      size: getReferenceHeight(context) * 0.5,
+                      color: Colors.white,
+                    ),
+                    SizedBox(height: getReferenceHeight(context) * 0.2,),
+                    Text("Levadas", style: TextStyle(
+                      fontSize: getReferenceHeight(context) * 0.33,
+                      color: Colors.white
+                    ),),
+                  ],
+                )),
           ),
-          actions: [
-            IconButton(onPressed: () {
-                Navigator.pushNamed(context, AppRoutes.PAGE_MENU);
-              }, icon: Icon(Icons.settings,
-                 color: Colors.blue,
-                 size: getReferenceHeight(context) * 0.48,),
-
-            )
-          ],
-        ),
-        body: TabBarView(
-          children: [
-            PageRitmos(),
-            PageAcessarConteudo(),
-            PageAcordes()
-          ],
-        ),
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, AppRoutes.PAGE_ACORDES);
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.orange,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.music,
+                      size: getReferenceHeight(context) * 0.5,
+                      color: Colors.white,),
+                    SizedBox(height: getReferenceHeight(context) * 0.2,),
+                    Text("Campo harmônico", style: TextStyle(
+                        fontSize: getReferenceHeight(context) * 0.33,
+                        color: Colors.white
+                    ),),
+                  ],
+                )),
+          ),
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, AppRoutes.PAGE_CURSO_LEVADAS);
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.purple,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.linesLeaning,
+                      size: getReferenceHeight(context) * 0.5,
+                      color: Colors.white,),
+                    SizedBox(height: getReferenceHeight(context) * 0.2,),
+                    Text("Curso de levadas", style: TextStyle(
+                        fontSize: getReferenceHeight(context) * 0.33,
+                        color: Colors.white
+                    ),),
+                  ],
+                )),
+          ),
+          GestureDetector(
+            onTap: (){
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.brown,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.guitar,
+                      size: getReferenceHeight(context) * 0.5,
+                      color: Colors.white,),
+                    SizedBox(height: getReferenceHeight(context) * 0.2,),
+                    Text("Batidas de ukulele", style: TextStyle(
+                        fontSize: getReferenceHeight(context) * 0.33,
+                        color: Colors.white
+                    ),),
+                  ],
+                )),
+          ),
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, AppRoutes.PAGE_DEDILHADOS);
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.blueGrey,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.guitar,
+                      size: getReferenceHeight(context) * 0.5,
+                      color: Colors.white,),
+                    SizedBox(height: getReferenceHeight(context) * 0.2,),
+                    Text("Dedilhados de ukulele", style: TextStyle(
+                        fontSize: getReferenceHeight(context) * 0.33,
+                        color: Colors.white
+                    ),),
+                  ],
+                )),
+          ),
+          GestureDetector(
+            onTap: (){
+              Navigator.pushNamed(context, AppRoutes.PAGE_MENU);
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.green,
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(FontAwesomeIcons.question,
+                      size: getReferenceHeight(context) * 0.5,
+                      color: Colors.white,),
+                    SizedBox(height: getReferenceHeight(context) * 0.2,),
+                    Text("Ajuda", style: TextStyle(
+                        fontSize: getReferenceHeight(context) * 0.33,
+                        color: Colors.white
+                    ),),
+                  ],
+                )),
+          ),
+        ],
       ),
     );
   }

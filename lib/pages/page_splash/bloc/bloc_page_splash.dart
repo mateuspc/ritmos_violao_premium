@@ -27,6 +27,7 @@ class BlocPageSplash {
   Sink<ApiResponse> get sinkResponse => _response.sink;
 
   Future<ApiResponse> initPurchaseInApp() async {
+
     sinkLoading.add(true);
     try{
 
@@ -47,11 +48,14 @@ class BlocPageSplash {
           customerInfo.entitlements.all[entitlementID]!.isActive == true) {
         // Possui direito
         print("Usuario ja tem direito: true");
+        AppData().entitlementIsActive = true;
         sinkLoading.add(false);
         ApiResponse response = ApiResponse.ok(result: "", codeEnum: TypeReturnPurchase.TEM_DIREITO);
         sinkResponse.add(response);
         return response;
       } else {
+        AppData().entitlementIsActive = true;
+
         try {
           offerings = await Purchases.getOfferings();
           sinkLoading.add(false);
@@ -62,8 +66,7 @@ class BlocPageSplash {
         } on PlatformException catch (e) {
           sinkLoading.add(false);
         }
-
-
+        AppData().entitlementIsActive = true;
 
         sinkLoading.add(false);
         if (offerings == null || offerings!.current == null) {
@@ -80,18 +83,20 @@ class BlocPageSplash {
     }
 
     } on TimeoutException catch(e){
+      AppData().entitlementIsActive = true;
       ApiResponse response = ApiResponse.error(result: "", codeEnum: TypeReturnPurchase.TIMEOUT_EXCEPTION);
       sinkResponse.add(response);
       return response;
     }
     on SocketException catch(e){
+      AppData().entitlementIsActive = true;
       ApiResponse response = ApiResponse.error(result: "", codeEnum: TypeReturnPurchase.SOCKET_EXCEPTION);
       sinkResponse.add(response);
       return response;
     }
     catch(e){
+      AppData().entitlementIsActive = true;
       sinkLoading.add(false);
-      print("Script why deu falha: ${e}");
       ApiResponse response = ApiResponse.error(result: "", codeEnum: TypeReturnPurchase.FAIL);
       sinkResponse.add(response);
       return response;

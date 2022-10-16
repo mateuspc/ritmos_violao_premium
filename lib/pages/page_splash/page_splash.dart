@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:ritmos_de_violao_premium/pages/page_splash/bloc/bloc_page_splash.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
@@ -20,7 +21,7 @@ class PageSplashScreen extends StatefulWidget {
 class _PageSplashScreenState extends State<PageSplashScreen> {
 
   late Timer timer;
-  final BlocPageSplash _blocPageSplash = BlocPageSplash();
+  late BlocPageSplash _blocPageSplash;
 
   @override
   void initState() {
@@ -31,17 +32,13 @@ class _PageSplashScreenState extends State<PageSplashScreen> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-     Timer(
-       Duration(seconds: 4),
-         (){
-           User? currentUser = FirebaseAuth.instance.currentUser;
-           if(currentUser != null){
-             Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_HOME, (route) => false);
-           }else{
-             Navigator.pushReplacementNamed(context, AppRoutes.PAGE_LOGIN);
-           }
-         }
-     );
+    _blocPageSplash = Provider.of<BlocPageSplash>(context);
+    _blocPageSplash.initPurchaseInApp().then((value) {
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_HOME, (route) => false);
+    }).catchError((e){
+      Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_HOME, (route) => false);
+    });
+
   }
 
   @override

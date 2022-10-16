@@ -28,7 +28,7 @@ class _PageMenuState extends State<PageMenu> {
         slivers: [
           CustomToolbar(
               context: context,
-              colorLeadingIcon: Colors.blue,
+              colorLeadingIcon: Colors.green,
               backgroundColor: Colors.white,
               onTapLeading: (){
                 Navigator.pop(context);
@@ -82,18 +82,18 @@ class _PageMenuState extends State<PageMenu> {
           SliverToBoxAdapter(
             child: SizedBox(height: getReferenceHeight(context) * 0.22,),
           ),
-          SliverToBoxAdapter(
-            child: ListTileMenuCustom(title: 'Sair', iconLeading: Icons.exit_to_app,
-              onTap: (){
-                _showDialogExitApp(context, title: 'Deslogar',
-                  subtitle: "Deseja realmente deslogar da conta atual?",
-                  onTapPositiveButton: (){
-                    FirebaseAuth.instance.signOut();
-                    Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_LOGIN, (route) => false);
-                  });
-              },
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: ListTileMenuCustom(title: 'Sair', iconLeading: Icons.exit_to_app,
+          //     onTap: (){
+          //       _showDialogExitApp(context, title: 'Deslogar',
+          //         subtitle: "Deseja realmente deslogar da conta atual?",
+          //         onTapPositiveButton: (){
+          //           FirebaseAuth.instance.signOut();
+          //           Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_LOGIN, (route) => false);
+          //         });
+          //     },
+          //   ),
+          // ),
 
         ],
       ),
@@ -148,7 +148,7 @@ class ListTileMenuCustom extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: size.width * 0.05),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.blue, width: 0.3),
+        border: Border.all(color: Colors.green, width: 0.3),
         borderRadius: BorderRadius.circular(getReferenceHeight(context) * 0.1)
       ),
       child: ListTile(
@@ -159,11 +159,11 @@ class ListTileMenuCustom extends StatelessWidget {
           onTap();
         },
         leading: Icon(iconLeading,
-          color: Colors.blue,
+          color: Colors.green,
           size: getReferenceHeight(context) * 0.45,
         ),
         trailing: Icon(Icons.arrow_forward_ios_rounded,
-          color: Colors.blue,
+          color: Colors.green,
           size: getReferenceHeight(context) * 0.45,
         ),
       ),
