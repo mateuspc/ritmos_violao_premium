@@ -13,6 +13,7 @@ import 'package:ritmos_de_violao_premium/pages/page_aula_detalhes/page_detalhes_
 import 'package:ritmos_de_violao_premium/pages/page_campo_harmonico.dart';
 import 'package:ritmos_de_violao_premium/pages/page_curso_levadas.dart';
 import 'package:ritmos_de_violao_premium/pages/page_dedilhados.dart';
+import 'package:ritmos_de_violao_premium/pages/page_details_dedilhado.dart';
 import 'package:ritmos_de_violao_premium/pages/page_details_ritmo.dart';
 import 'package:ritmos_de_violao_premium/pages/page_home.dart';
 import 'package:ritmos_de_violao_premium/pages/page_menu.dart';
@@ -20,6 +21,7 @@ import 'package:ritmos_de_violao_premium/pages/page_ritmos.dart';
 import 'package:ritmos_de_violao_premium/pages/page_splash/bloc/bloc_page_splash.dart';
 import 'package:ritmos_de_violao_premium/pages/page_splash/page_splash.dart';
 import 'package:ritmos_de_violao_premium/pages/termos_e_politicas/page_abrir_link.dart';
+import 'package:ritmos_de_violao_premium/providers/acordes.dart';
 import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
 
 final temaPadrao = ThemeData(
@@ -47,7 +49,8 @@ void main() async {
         runApp(
             MultiProvider(
               providers: [
-                Provider(create: (_) => BlocPageSplash())
+                Provider(create: (_) => BlocPageSplash()),
+                ChangeNotifierProvider(create: (_) => Acordes())
               ],
               child: MaterialApp(
                 initialRoute: AppRoutes.PAGE_SPLASH_SCREEN,
@@ -70,7 +73,8 @@ void main() async {
                   AppRoutes.PAGE_ACORDES : (_) => PageAcordes(),
                   AppRoutes.PAGE_CURSO_LEVADAS : (_) => PageCursoLevadas(),
                   AppRoutes.PAGE_DETALHES_AULA_LEVADA : (_) => PageDetalhesAulaLevada(),
-                  AppRoutes.PAGE_DEDILHADOS : (_) => PageDedilhados()
+                  AppRoutes.PAGE_DEDILHADOS : (_) => PageDedilhados(),
+                  AppRoutes.PAGE_DETALHES_DEDILHADOS : (_) => PageDetailsDedilhados()
                 },
               ),
             )

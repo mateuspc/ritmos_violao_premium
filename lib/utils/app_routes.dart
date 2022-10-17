@@ -26,5 +26,6 @@ class AppRoutes{
   static const PAGE_CURSO_LEVADAS = "/page_curso_levadas";
   static const PAGE_DETALHES_AULA_LEVADA = "/page_detalhes_aula_levada";
   static const PAGE_DEDILHADOS = "/page_dedilhados";
+  static const PAGE_DETALHES_DEDILHADOS = "/page_detalhes_dedilhados";
 
 }

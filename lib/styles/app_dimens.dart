@@ -83,3 +83,15 @@ getListTileRitmoHeight(BuildContext context){
   double toolbarHeight = getToolbarHeight(context) * 3;
   return toolbarHeight;
 }
+
+getSizeContainerGridMao(BuildContext context, int quantidadeCads){
+  double width = MediaQuery.of(context).size.width;
+  int quantityLines = (quantidadeCads ~/ 2) + 1;
+  double tamanhoCard = width / 3;
+  return quantityLines * tamanhoCard;
+}
+
+getSizeContainerListMusic(BuildContext context, int quantidadeItens){
+  double heightItem = getToolbarHeight(context) * 1.1;
+  return heightItem * quantidadeItens;
+}

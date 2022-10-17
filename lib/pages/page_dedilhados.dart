@@ -5,6 +5,7 @@ import 'package:ritmos_de_violao_premium/models/categoria.dart';
 import 'package:ritmos_de_violao_premium/models/dedilhado.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/utils/app_enums.dart';
+import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
 import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
 import 'package:ritmos_de_violao_premium/widgets/list_tile_item_dedilhado.dart';
 
@@ -66,10 +67,8 @@ class _PageDedilhadosState extends State<PageDedilhados> {
 
             return GestureDetector(
               onTap: (){
-                // if(_dedilhados[index].isLocked){
-                //
-                // }
-                // else Navigator.pushNamed(context, AppRoutes.PAGE_DETAILS_DEDILHADO, arguments: _dedilhados[index]);
+                Navigator.pushNamed(context, AppRoutes.PAGE_DETALHES_DEDILHADOS,
+                    arguments: _dedilhados[index]);
               },
               child: ListTileItemForSale(
                 feitoPor: _dedilhados[index].feitoPor,

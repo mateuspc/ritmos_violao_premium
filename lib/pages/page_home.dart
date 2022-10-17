@@ -94,51 +94,29 @@ class _PageHomeState extends State<PageHome> {
                   ],
                 )),
           ),
-          GestureDetector(
-            onTap: (){
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  color: Colors.brown,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(FontAwesomeIcons.guitar,
-                      size: getReferenceHeight(context) * 0.5,
-                      color: Colors.white,),
-                    SizedBox(height: getReferenceHeight(context) * 0.2,),
-                    Text("Batidas de ukulele", style: TextStyle(
-                        fontSize: getReferenceHeight(context) * 0.33,
-                        color: Colors.white
-                    ),),
-                  ],
-                )),
-          ),
-          GestureDetector(
-            onTap: (){
-              Navigator.pushNamed(context, AppRoutes.PAGE_DEDILHADOS);
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black, width: 1),
-                  color: Colors.blueGrey,
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(FontAwesomeIcons.guitar,
-                      size: getReferenceHeight(context) * 0.5,
-                      color: Colors.white,),
-                    SizedBox(height: getReferenceHeight(context) * 0.2,),
-                    Text("Dedilhados de ukulele", style: TextStyle(
-                        fontSize: getReferenceHeight(context) * 0.33,
-                        color: Colors.white
-                    ),),
-                  ],
-                )),
-          ),
+          // GestureDetector(
+          //   onTap: (){
+          //     Navigator.pushNamed(context, AppRoutes.PAGE_DEDILHADOS);
+          //   },
+          //   child: Container(
+          //       decoration: BoxDecoration(
+          //         border: Border.all(color: Colors.black, width: 1),
+          //         color: Colors.blueGrey,
+          //       ),
+          //       child: Column(
+          //         mainAxisAlignment: MainAxisAlignment.center,
+          //         children: [
+          //           Icon(FontAwesomeIcons.guitar,
+          //             size: getReferenceHeight(context) * 0.5,
+          //             color: Colors.white,),
+          //           SizedBox(height: getReferenceHeight(context) * 0.2,),
+          //           Text("Dedilhados de ukulele", style: TextStyle(
+          //               fontSize: getReferenceHeight(context) * 0.33,
+          //               color: Colors.white
+          //           ),),
+          //         ],
+          //       )),
+          // ),
           GestureDetector(
             onTap: (){
               Navigator.pushNamed(context, AppRoutes.PAGE_MENU);

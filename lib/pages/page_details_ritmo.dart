@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:pod_player/pod_player.dart';
 import 'package:ritmos_de_violao_premium/models/division.dart';
 import 'package:ritmos_de_violao_premium/models/ritmo.dart';
@@ -43,23 +42,6 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
 
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-
-    print(state);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-  }
 
   @override
   Widget build(BuildContext context) {
