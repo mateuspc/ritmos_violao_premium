@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,27 +16,45 @@ import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  if(Platform.isWindows){
+    runApp(
+        MaterialApp(
+          initialRoute: AppRoutes.PAGE_SPLASH_SCREEN,
+          debugShowCheckedModeBanner: false,
+          routes: {
+            AppRoutes.PAGE_SPLASH_SCREEN : (_) => PageSplashScreen(),
+            AppRoutes.PAGE_HOME : (_) => PageHome(),
+            AppRoutes.PAGE_DETAILS : (_) => PageDetails(),
+            AppRoutes.PAGE_CAMPO_HARMONICO : (_) => PageCampoHarmonico(),
+            AppRoutes.PAGE_MENU : (_) => PageMenu(),
+            AppRoutes.PAGE_DETALHES_AULA : (_) => PageDetalhesAula()
+          },
+        )
+    );
+  }else{
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
 
-  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
-      (v) {
-        runApp(
-            MaterialApp(
-              initialRoute: AppRoutes.PAGE_SPLASH_SCREEN,
-              debugShowCheckedModeBanner: false,
-              routes: {
-                AppRoutes.PAGE_SPLASH_SCREEN : (_) => PageSplashScreen(),
-                AppRoutes.PAGE_HOME : (_) => PageHome(),
-                AppRoutes.PAGE_DETAILS : (_) => PageDetails(),
-                AppRoutes.PAGE_CAMPO_HARMONICO : (_) => PageCampoHarmonico(),
-                AppRoutes.PAGE_MENU : (_) => PageMenu(),
-                AppRoutes.PAGE_DETALHES_AULA : (_) => PageDetalhesAula()
-              },
-            )
-        );
-      }
-  );
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then(
+            (v) {
+          runApp(
+              MaterialApp(
+                initialRoute: AppRoutes.PAGE_SPLASH_SCREEN,
+                debugShowCheckedModeBanner: false,
+                routes: {
+                  AppRoutes.PAGE_SPLASH_SCREEN : (_) => PageSplashScreen(),
+                  AppRoutes.PAGE_HOME : (_) => PageHome(),
+                  AppRoutes.PAGE_DETAILS : (_) => PageDetails(),
+                  AppRoutes.PAGE_CAMPO_HARMONICO : (_) => PageCampoHarmonico(),
+                  AppRoutes.PAGE_MENU : (_) => PageMenu(),
+                  AppRoutes.PAGE_DETALHES_AULA : (_) => PageDetalhesAula()
+                },
+              )
+          );
+        }
+    );
+  }
+
 
 }

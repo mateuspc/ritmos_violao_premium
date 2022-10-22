@@ -31,9 +31,9 @@ class _PageAcessarConteudoState extends State<PageAcessarConteudo> {
           ).set(
               e.toJson()
           );
-          e.conteudos!.forEach((e){
-            firestoreRef.c
-          });
+          // e.conteudos!.forEach((e){
+          //   firestoreRef.c
+          // });
         }
     );
   }
