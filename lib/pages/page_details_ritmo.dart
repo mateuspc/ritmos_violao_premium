@@ -35,7 +35,6 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
 
 
       _ritmo = ModalRoute.of(context)!.settings.arguments as Ritmo;
-
       controller = PodPlayerController(
         playVideoFrom: PlayVideoFrom.youtube(_ritmo.videoViolaoId.isEmpty ? _ritmo.videoId : _ritmo.videoViolaoId),
       )..initialise();
