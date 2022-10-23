@@ -28,7 +28,7 @@ class LeadingAppBar extends StatelessWidget {
         child: Icon(iconData != null ? iconData
             : Platform.isAndroid ? Icons.arrow_back
             : Icons.arrow_back_ios,
-            color: Colors.white,
+            color: Colors.blue,
             size: getReferenceHeight(context) * 0.4),
       ),
     );

@@ -9,6 +9,7 @@ import 'package:ritmos_de_violao_premium/styles/app_fontsize.dart';
 import 'package:ritmos_de_violao_premium/utils/campo_harmonico_utils.dart';
 import 'package:ritmos_de_violao_premium/utils/enums.dart';
 import 'package:ritmos_de_violao_premium/utils/page_route_anim.dart';
+import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
 import 'package:ritmos_de_violao_premium/widgets/leading_app_bar.dart';
 import 'package:ritmos_de_violao_premium/widgets/title_app_bar.dart';
 
@@ -79,17 +80,15 @@ class _PageCampoHarmonicoState extends State<PageCampoHarmonico> with SingleTick
     return DefaultTabController(
       length: 2,
       child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: getToolbarHeight(context),
-          title: TitleAppBar(title: 'Campo harmônico'),
-          leading: LeadingAppBar(onPressed: (){
-             Navigator.pop(context);
-           },
-          ),
-          bottom: TabBar(
+        appBar: CustomToolbarNotSliver(
+            context: context,
+            colorLeadingIcon: Colors.orange,
+            backgroundColor: Colors.white,
+            tabBar: TabBar(
             labelStyle: TextStyle(
                fontSize: getFontSizeTabs(context)
             ),
+            labelColor: Colors.orange,
             onTap: (index){
               print(index);
 
@@ -100,7 +99,9 @@ class _PageCampoHarmonicoState extends State<PageCampoHarmonico> with SingleTick
           ],
 
           ),
-        ),
+            onTapLeading: (){
+              Navigator.pop(context);
+            }, title: "Campo harmônico", onActionClicked: () {  }),
         body: TabBarView(
           children: [
             GridView.count(

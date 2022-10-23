@@ -1,5 +1,3 @@
-
-
 import 'package:ritmos_de_violao_premium/models/conteudo.dart';
 import 'package:ritmos_de_violao_premium/models/modulo.dart';
 
@@ -9,7 +7,7 @@ class CursoData {
 
     List<Modulo> modulos = [];
 
-    var m1 = Modulo(
+   var m1 = Modulo(
       uuid: "001",
       nome: "Aprendendo a dedilhar",
       descricao: "Esse modulo vai ensinar você a como dedilhar",
@@ -17,7 +15,7 @@ class CursoData {
       conteudos: [
         Conteudo(
           uuid: "NM8dIo5AT0g",
-          titulo: "TUTORIAL: DEDILHADOS NO VIOLÃO PARA INICIANTE"
+          titulo: "TUTORIAL: DEDILHADOS NO VIOLÃO PARA INICIANTE",
         ),
         Conteudo(
             uuid: "Nyr3rN1pkqI",
@@ -31,16 +29,16 @@ class CursoData {
     );
    modulos.add(m1);
 
-
    var m2 = Modulo(
      uuid: "002",
-     nome: "Tudo sobre acordes!",
+     nome: "Mini curso de acordes",
      descricao: "Apreda sobre acordes com a professora Thayna Brito",
      quantidadeConteudos: 0,
      conteudos: [
        Conteudo(
            uuid: "Q9jHrikY4ps",
            titulo: "AULA 01 - MONTE ACORDES MAIORES NO BRAÇO TODO - TUTORIAL COMPLETO",
+
        ),
        Conteudo(
            uuid: "8wP7uu9kzSE",
@@ -81,6 +79,7 @@ class CursoData {
        Conteudo(
            uuid: "agrjSXJRMnw",
            titulo: "COMO LER TABLATURA - TUTORIAL COMPLETO EXPLICANDO OS SÍMBOLOS",
+
        ),
        Conteudo(
            uuid: "6-49l3GGros",

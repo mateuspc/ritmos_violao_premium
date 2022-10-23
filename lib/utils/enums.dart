@@ -25,3 +25,8 @@ enum TabCampoHarmonico{
   MAIORES,
   MENORES
 }
+
+enum TypeResponse {
+  SUCCESS,
+  FAIL
+}

@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:pod_player/pod_player.dart';
 import 'package:ritmos_de_violao_premium/models/division.dart';
 import 'package:ritmos_de_violao_premium/models/ritmo.dart';
@@ -36,30 +35,12 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
 
 
       _ritmo = ModalRoute.of(context)!.settings.arguments as Ritmo;
-
       controller = PodPlayerController(
         playVideoFrom: PlayVideoFrom.youtube(_ritmo.videoViolaoId.isEmpty ? _ritmo.videoId : _ritmo.videoViolaoId),
       )..initialise();
 
   }
 
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-
-    print(state);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-  }
 
   @override
   Widget build(BuildContext context) {

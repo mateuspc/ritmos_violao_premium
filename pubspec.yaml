@@ -24,6 +24,18 @@ dependencies:
   firebase_storage: ^10.3.0
   cloud_firestore: ^3.5.1
   shimmer: ^2.0.0
+  rxdart: ^0.27.5
+  sign_in_with_apple: ^4.1.0
+  google_sign_in: ^5.4.1
+  firebase_auth: ^3.6.4
+  flutter_facebook_auth: ^4.4.1
+  localstorage: ^4.0.0+1
+  mask_text_input_formatter: ^2.3.0
+  validators: ^3.0.0
+  brasil_fields: ^1.3.1
+  purchases_flutter:
+  provider:
+  webview_flutter: ^3.0.4
 
 dev_dependencies:
   flutter_test:
@@ -53,7 +65,9 @@ flutter:
     - assets/icone/
     - assets/imagens/icone_botao_play.svg
     - assets/imagens/play.png
-  #   - images/a_dot_ham.jpeg
+    - assets/imagens/icone_olho_fechado.svg
+    - assets/imagens/icone_olho.svg
+    - assets/capa_ofertas/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

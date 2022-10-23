@@ -15,7 +15,7 @@ class TitleAppBar extends StatelessWidget {
     return Text(title, style: TextStyle(
         fontFamily: FontsApp.mulishBold,
         fontSize: getReferenceHeight(context) * 0.3,
-        color: Colors.white
+        color: Colors.blue
     ),);
   }
 }

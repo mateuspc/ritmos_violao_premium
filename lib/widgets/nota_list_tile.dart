@@ -52,7 +52,9 @@ class NotaListTile extends StatelessWidget {
             ),
             Spacer(),
             if(acorde.isLocked)
-            FaIcon(FontAwesomeIcons.lock, size: getReferenceHeight(context) * 0.4)
+            FaIcon(FontAwesomeIcons.lock,
+                color: Colors.black,
+                size: getReferenceHeight(context) * 0.3,)
           ],
         ),
       ),

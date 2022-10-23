@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ritmos_de_violao_premium/data/data_acordes_ukulele.dart';
+import 'package:ritmos_de_violao_premium/data/ritmos_ukulele_data.dart';
 import 'package:ritmos_de_violao_premium/styles/app_colors.dart';
 import '../models/categoria.dart';
 import '../models/division.dart';
@@ -2420,6 +2421,14 @@ class RitmosData {
     );
     ritmos.add(r39);
 
+    List<Ritmo> ritmosUkuleleAux = [];
+    RitmosUkuleleleData.getAllRitmos().forEach((element) {
+      element.categorias.add(Categoria(nome: "Ukulele", backgroundColor: Colors.brown));
+      ritmosUkuleleAux.add(element);
+    });
+
+
+    ritmos.addAll(ritmosUkuleleAux);
     return ritmos;
   }
 }

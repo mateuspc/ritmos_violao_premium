@@ -1,6 +1,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.devfull.cursodeviolao">
-   <application
+
+    <uses-permission android:name="com.android.vending.BILLING" />
+
+    <application
         android:label="Ritmos de violão"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">

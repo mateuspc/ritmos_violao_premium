@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ritmos_de_violao_premium/data/curso_data.dart';
-import 'package:ritmos_de_violao_premium/models/conteudo.dart';
 import 'package:ritmos_de_violao_premium/models/modulo.dart';
 import 'package:ritmos_de_violao_premium/pages/page_modulos_curso/widgets/videos_carrosel.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
@@ -24,24 +23,29 @@ class _PageAcessarConteudoState extends State<PageAcessarConteudo> {
   @override
   void initState() {
     super.initState();
-    CursoData.getModulosCurso().forEach(
-            (e){
-          firestoreRef.collection("modulos").doc(
-           "idDoDocumento"
-          ).set(
-              e.toJson()
-          );
-          // e.conteudos!.forEach((e){
-          //   firestoreRef.c
-          // });
-        }
-    );
+    // CursoData.getModulosCurso().forEach(
+    //         (modulo){
+    //       firestoreRef.collection("modulos").doc().set(
+    //           modulo.toJson()
+    //       );
+    //       modulo.conteudos!.forEach((e){
+    //         firestoreRef.collection("videos").doc(e.uuid).set(
+    //           e.toJsonFull()
+    //         );
+    //
+    //         firestoreRef.collection("videos").doc(e.uuid).collection("links").doc().set(
+    //           e.leitura!.toJson()
+    //         );
+    //
+    //       });
+    //     }
+    // );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    Size size = MediaQuery.of(context).size;  return Container();
+    Size size = MediaQuery.of(context).size;
 
     return Scaffold(
         backgroundColor: Colors.white,
