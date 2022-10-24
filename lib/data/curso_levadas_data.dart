@@ -116,8 +116,44 @@ class CursoLevadasData {
     );
 
     list.add(va3);
+    VideoAula va4 = VideoAula(titulo: "AULA #4 - APRENDENDO REGGAE",
+      subtitulo: "Aula de ritmo",
+      videoId: "zWhFo_drbGk",
+      emBreve: false,
+      thumbnail: "https://img.youtube.com/vi/zWhFo_drbGk/hqdefault.jpg",
+      destaques: [
+        "Reggae é um gênero musical criado na Jamaica do fim da década de 1960.",
+        "Depois de treinar bastante, tente tocar a música Oh! Chuva de falamansa.",
+        "No Brasil, é um ritmo predominante no Estado do Maranhão, surgindo na periferia da capital maranhense na década de 80.",
+        "Se quiser saber mais, pesquise sobre o Museu do Reggae Maranhão"
+      ],
+      arrows: [
+        Arrow.down(),
+        Arrow.up()
+      ],
+      categorias: [
+        Categoria(
+            nome: 'Iniciante',
+            backgroundColor: reggaeColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: '#primeira',
+            backgroundColor: mpbColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: 'Módulo 1',
+            backgroundColor: forroColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+      ],
 
-    VideoAula va4 = VideoAula(titulo: "AULA #4 - APRENDENDO PRIMEIRA LEVADA",
+    );
+
+    list.add(va4);
+
+    VideoAula va5 = VideoAula(titulo: "AULA #5 - APRENDENDO OUTRA LEVADA",
       subtitulo: "Aula de ritmo",
       videoId: "7X7EYFCGR4Q",
       emBreve: true,
@@ -138,7 +174,7 @@ class CursoLevadasData {
             borderColor: Colors.black,
             textColor: Colors.white),
         Categoria(
-            nome: '#primeira',
+            nome: '#novalevada',
             backgroundColor: Colors.grey,
             borderColor: Colors.black,
             textColor: Colors.white),
@@ -151,7 +187,8 @@ class CursoLevadasData {
 
     );
 
-    list.add(va4);
+    list.add(va5);
+
     return list;
 
   }
