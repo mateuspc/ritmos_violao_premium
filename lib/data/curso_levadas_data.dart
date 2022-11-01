@@ -153,7 +153,42 @@ class CursoLevadasData {
 
     list.add(va4);
 
-    VideoAula va5 = VideoAula(titulo: "AULA #5 - APRENDENDO OUTRA LEVADA",
+    VideoAula va5 = VideoAula(titulo: "AULA #5 - POP/RAP",
+      subtitulo: "Aula de ritmo",
+      videoId: "NIBVHSvuoqE",
+      thumbnail: "https://img.youtube.com/vi/NIBVHSvuoqE/hqdefault.jpg",
+      destaques: [
+        "Nessa aula foi utilizado a tecnica de abafamento e baixo cima.",
+        "Pop rap também conhecido como hip hop, é um rap com uma forte influência da música pop(Fonte: Wikipédia).",
+        "Treine bastante até conseguir, volte o vídeo se for necessário."
+      ],
+      arrows: [
+        Arrow.down(),
+        Arrow.up()
+      ],
+      categorias: [
+        Categoria(
+            nome: 'HIP HOP',
+            backgroundColor: Colors.green,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: 'POP/RAP',
+            backgroundColor: Colors.purple,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: 'Módulo 1',
+            backgroundColor: forroColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+      ],
+
+    );
+
+    list.add(va5);
+
+    VideoAula va6 = VideoAula(titulo: "AULA #6 - APRENDENDO OUTRA LEVADA",
       subtitulo: "Aula de ritmo",
       videoId: "7X7EYFCGR4Q",
       emBreve: true,
@@ -187,8 +222,7 @@ class CursoLevadasData {
 
     );
 
-    list.add(va5);
-
+    list.add(va6);
     return list;
 
   }
