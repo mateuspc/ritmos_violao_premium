@@ -46,3 +46,4 @@ const choro = Color(0xFF7D93D9);
 const marchinhaColor = Colors.blueGrey;
 const tecnobregaColor = Colors.pink;
 const corBaiao = Color(0xFF7B07A5);
+const toadaColor = Color(0xFF7D93F5);

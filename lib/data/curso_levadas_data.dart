@@ -169,7 +169,7 @@ class CursoLevadasData {
       categorias: [
         Categoria(
             nome: 'HIP HOP',
-            backgroundColor: Colors.green,
+            backgroundColor: Colors.teal,
             borderColor: Colors.black,
             textColor: Colors.white),
         Categoria(
@@ -188,7 +188,79 @@ class CursoLevadasData {
 
     list.add(va5);
 
-    VideoAula va6 = VideoAula(titulo: "AULA #6 - APRENDENDO OUTRA LEVADA",
+    VideoAula va6 = VideoAula(titulo: "AULA #06 - SERTANEJO E PISEIRO",
+      subtitulo: "Aula de ritmo",
+      videoId: "NAU__LyfaMA",
+      emBreve: false,
+      thumbnail: "https://img.youtube.com/vi/NAU__LyfaMA/hqdefault.jpg",
+      destaques: [
+        "Essa levada vai utilizar bastante a técnica do abafamento mostrado  nos vídeos anteriores.",
+        "Muito utilizado no sertanejo universitário e o famoso piseiro.",
+        "Repita várias vezes até assimilar a batida, faça valer a pena."
+      ],
+      arrows: [
+        Arrow.down(),
+        Arrow.up()
+      ],
+      categorias: [
+        Categoria(
+            nome: 'Sertanejo',
+            backgroundColor: sertanejoColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: 'Piseiro',
+            backgroundColor: Colors.purple,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: 'Módulo 1',
+            backgroundColor: forroColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+      ],
+
+    );
+
+    list.add(va6);
+
+
+    VideoAula va7 = VideoAula(titulo: "AULA #7 - TOADA",
+      subtitulo: "Aula de ritmo",
+      videoId: "G08u8tR30hE",
+      thumbnail: "https://img.youtube.com/vi/G08u8tR30hE/hqdefault.jpg",
+      destaques: [
+        "Demostrado um técnica muito utilizada no Sertanejo Raiz",
+        "Toada é um estilo de música tradicional da Amazônia central que se tornou muito popular no Brasil",
+        "Treine bastante até conseguir"
+      ],
+      arrows: [
+        Arrow.down(),
+        Arrow.up()
+      ],
+      categorias: [
+        Categoria(
+            nome: 'Toada',
+            backgroundColor: toadaColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: 'Sertanejo Raiz',
+            backgroundColor: sertanejoRaizColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+        Categoria(
+            nome: 'Módulo 1',
+            backgroundColor: forroColor,
+            borderColor: Colors.black,
+            textColor: Colors.white),
+      ],
+
+    );
+
+    list.add(va7);
+
+    VideoAula va8 = VideoAula(titulo: "AULA #8 - APRENDENDO OUTRA LEVADA",
       subtitulo: "Aula de ritmo",
       videoId: "7X7EYFCGR4Q",
       emBreve: true,
@@ -222,7 +294,7 @@ class CursoLevadasData {
 
     );
 
-    list.add(va6);
+    list.add(va8);
     return list;
 
   }
