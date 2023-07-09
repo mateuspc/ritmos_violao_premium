@@ -20,7 +20,6 @@ import 'package:ritmos_de_violao_premium/pages/page_menu.dart';
 import 'package:ritmos_de_violao_premium/pages/page_ritmos.dart';
 import 'package:ritmos_de_violao_premium/pages/page_splash/bloc/bloc_page_splash.dart';
 import 'package:ritmos_de_violao_premium/pages/page_splash/page_splash.dart';
-import 'package:ritmos_de_violao_premium/pages/termos_e_politicas/page_abrir_link.dart';
 import 'package:ritmos_de_violao_premium/providers/acordes.dart';
 import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
 
@@ -68,7 +67,6 @@ void main() async {
                   AppRoutes.PAGE_LOGIN : (_) => PageLogin(),
                   AppRoutes.PAGE_CADASTRO : (_) => PageCadastro(),
                   AppRoutes.PAGE_ESQUECI_MINHA_SENHA : (_) => PageEsqueciMinhaSenha(),
-                  AppRoutes.PAGE_OPEN_LINK_WEBVIEW : (_) => PageOpenLinkWebView(),
                   AppRoutes.PAGE_RITMOS : (_) => PageRitmos(),
                   AppRoutes.PAGE_ACORDES : (_) => PageAcordes(),
                   AppRoutes.PAGE_CURSO_LEVADAS : (_) => PageCursoLevadas(),

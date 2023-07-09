@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:ritmos_de_violao_premium/bloc_common/bloc_common.dart';
 import 'package:ritmos_de_violao_premium/models/api_response.dart';
 import 'package:ritmos_de_violao_premium/pages/autenticacao/models/request_login_model.dart';
@@ -9,7 +10,22 @@ import 'package:ritmos_de_violao_premium/pages/autenticacao/repository/auth_repo
 import 'package:rxdart/rxdart.dart';
 import 'package:validators/validators.dart';
 
-class BlocPageCadastro with BlocCommon{
+class BlocPageCadastro{
+
+
+  bool validatorStr(AsyncSnapshot<String> snapshot, { bool enabled = true}) {
+    if(enabled){
+      return snapshot.hasError ? true : false;
+    }
+    return false;
+  }
+  String errorTextStr(AsyncSnapshot<String> snapshot, { bool enabled = true}) {
+    if(enabled){
+      return snapshot.hasError ? snapshot.error.toString() : "";
+    }
+    return '';
+  }
+
   final _isLoading = BehaviorSubject<bool>.seeded(true);
   Stream<bool> get streamLoading => _isLoading.stream;
   Sink<bool> get sinkLoading => _isLoading.sink;

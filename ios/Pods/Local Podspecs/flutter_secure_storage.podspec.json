@@ -1,29 +1,27 @@
 {
-  "name": "flutter_facebook_auth",
-  "version": "5.0.9",
-  "summary": "Plugin to Facebook authentication for iOS in your Flutter app",
-  "description": "Plugin to Facebook authentication for iOS in your Flutter app",
-  "homepage": "https://meedu.app",
+  "name": "flutter_secure_storage",
+  "version": "6.0.0",
+  "summary": "A Flutter plugin to store data in secure storage.",
+  "description": "A Flutter plugin to store data in secure storage.",
+  "homepage": "http://example.com",
   "license": {
     "file": "../LICENSE"
   },
   "authors": {
-    "meedu.app": "contacto@meedu.app"
+    "German Saprykin": "saprykin.h@gmail.com"
   },
   "source": {
     "path": "."
   },
   "source_files": "Classes/**/*",
+  "public_header_files": "Classes/**/*.h",
   "dependencies": {
     "Flutter": [
 
-    ],
-    "FBSDKLoginKit": [
-      "~> 16.0.1"
     ]
   },
   "platforms": {
-    "ios": "11.0"
+    "ios": "9.0"
   },
   "pod_target_xcconfig": {
     "DEFINES_MODULE": "YES",

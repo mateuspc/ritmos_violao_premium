@@ -2421,6 +2421,36 @@ class RitmosData {
     );
     ritmos.add(r39);
 
+    var r40 = Ritmo(musicas: [
+      Musica(nome: 'Garota de Ipanema', autor: 'Tom Jobim'),
+      Musica(nome: 'O barquinho', autor: 'Roberto Menescal'),
+      Musica(nome: 'Só tinha que ser você', autor: 'Tom Jobim'),
+      Musica(nome: 'Flor de liz', autor: 'Djavan'),
+      Musica(nome: 'Chove chuva', autor: 'Jorge Ben Jor'),
+      Musica(nome: 'Samba de Verão', autor: 'Caetano Veloso'),
+    ],
+        acordesToShowSobreVideoOrderTime: [],
+        apelido: 'MPB/BOSSA NOVA 2',
+        categorias: [
+          Categoria(backgroundColor: mpbColor,
+              nome: 'MPB'
+          ),
+          Categoria(backgroundColor: bossaNova,
+              nome: 'BOSSA NOVA'
+          ),
+        ],
+        videoId: 'z5rH5R5oAI8',
+        isDedilhado: true,
+        sequenciaDedilhado: 'P-(IMA)-P-(IMA)(IMA)-P-(IMA)(IMA) - P - (IMA)',
+        timesShowAcordeInVideoInSeconds: [],
+        colorRitmo: Colors.red,
+        feitoPor: 'Thayna Brito',
+        videoViolaoId: '',
+        arrows: [
+        ], divisionsRitmo: []
+    );
+    ritmos.add(r40);
+
     List<Ritmo> ritmosUkuleleAux = [];
     RitmosUkuleleleData.getAllRitmos().forEach((element) {
       element.categorias.add(Categoria(nome: "Ukulele", backgroundColor: Colors.brown));

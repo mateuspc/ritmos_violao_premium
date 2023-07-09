@@ -260,41 +260,41 @@ class CursoLevadasData {
 
     list.add(va7);
 
-    VideoAula va8 = VideoAula(titulo: "AULA #8 - APRENDENDO OUTRA LEVADA",
-      subtitulo: "Aula de ritmo",
-      videoId: "7X7EYFCGR4Q",
-      emBreve: true,
-      thumbnail: "https://img.youtube.com/vi/7X7EYFCGR4Q/hqdefault.jpg",
-      destaques: [
-        "A técnica do abafamento é utilizada em diferentes levadas",
-        "Toca e abáfa as cordas deixando a barriga da mão interromper o som das cordas",
-        "Treine bastante até conseguir"
-      ],
-      arrows: [
-        Arrow.down(),
-        Arrow.up()
-      ],
-      categorias: [
-        Categoria(
-            nome: 'Iniciante',
-            backgroundColor: Colors.grey,
-            borderColor: Colors.black,
-            textColor: Colors.white),
-        Categoria(
-            nome: '#novalevada',
-            backgroundColor: Colors.grey,
-            borderColor: Colors.black,
-            textColor: Colors.white),
-        Categoria(
-            nome: 'Módulo 1',
-            backgroundColor: Colors.grey,
-            borderColor: Colors.black,
-            textColor: Colors.white),
-      ],
-
-    );
-
-    list.add(va8);
+    // VideoAula va8 = VideoAula(titulo: "AULA #8 - APRENDENDO OUTRA LEVADA",
+    //   subtitulo: "Aula de ritmo",
+    //   videoId: "7X7EYFCGR4Q",
+    //   emBreve: true,
+    //   thumbnail: "https://img.youtube.com/vi/7X7EYFCGR4Q/hqdefault.jpg",
+    //   destaques: [
+    //     "A técnica do abafamento é utilizada em diferentes levadas",
+    //     "Toca e abáfa as cordas deixando a barriga da mão interromper o som das cordas",
+    //     "Treine bastante até conseguir"
+    //   ],
+    //   arrows: [
+    //     Arrow.down(),
+    //     Arrow.up()
+    //   ],
+    //   categorias: [
+    //     Categoria(
+    //         nome: 'Iniciante',
+    //         backgroundColor: Colors.grey,
+    //         borderColor: Colors.black,
+    //         textColor: Colors.white),
+    //     Categoria(
+    //         nome: '#novalevada',
+    //         backgroundColor: Colors.grey,
+    //         borderColor: Colors.black,
+    //         textColor: Colors.white),
+    //     Categoria(
+    //         nome: 'Módulo 1',
+    //         backgroundColor: Colors.grey,
+    //         borderColor: Colors.black,
+    //         textColor: Colors.white),
+    //   ],
+    //
+    // );
+    //
+    // list.add(va8);
     return list;
 
   }

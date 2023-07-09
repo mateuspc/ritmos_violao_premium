@@ -26,6 +26,7 @@ class BlocPageSplash {
   Stream<ApiResponse> get streamResponse => _response.stream;
   Sink<ApiResponse> get sinkResponse => _response.sink;
 
+
   Future<ApiResponse> initPurchaseInApp() async {
 
     sinkLoading.add(true);

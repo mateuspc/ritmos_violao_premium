@@ -7,6 +7,7 @@ import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
 import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
 import 'package:ritmos_de_violao_premium/widgets/leading_app_bar.dart';
 import 'package:ritmos_de_violao_premium/widgets/title_app_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/funcoes_menu.dart';
 
@@ -57,6 +58,10 @@ class _PageMenuState extends State<PageMenu> {
           SliverToBoxAdapter(
             child: ListTileMenuCustom(title: 'Termos de uso', iconLeading: Icons.import_contacts,
               onTap: (){
+
+                launchUrl(Uri.parse("https://sites.google.com/view/aprenderritmosviolaotermos/"),
+                   mode: LaunchMode.externalApplication);
+
                 AbrirLinkWebViewModel abrirLinkWebViewModel = AbrirLinkWebViewModel(
                     title: "Termos de uso", link: "https://sites.google.com/view/aprenderritmosviolaotermos/");
                 Navigator.pushNamed(context, AppRoutes.PAGE_OPEN_LINK_WEBVIEW,
@@ -70,11 +75,9 @@ class _PageMenuState extends State<PageMenu> {
           SliverToBoxAdapter(
             child: ListTileMenuCustom(title: 'Políticas de privacidade', iconLeading: Icons.lock,
               onTap: (){
+                launchUrl(Uri.parse("https://sites.google.com/view/politicaprivacidadedevfullapps/"),
+                    mode: LaunchMode.externalApplication);
 
-                AbrirLinkWebViewModel abrirLinkWebViewModel = AbrirLinkWebViewModel(
-                    title: "Políticas de privacidade", link: "https://sites.google.com/view/politicaprivacidadedevfullapps/");
-                Navigator.pushNamed(context, AppRoutes.PAGE_OPEN_LINK_WEBVIEW,
-                    arguments: abrirLinkWebViewModel);
 
               },
             ),
@@ -101,7 +104,7 @@ class _PageMenuState extends State<PageMenu> {
   }
 }
 
-Future<dynamic> _showDialogExitApp(BuildContext context, {required String title,
+ _showDialogExitApp(BuildContext context, {required String title,
   required String subtitle, required VoidCallback onTapPositiveButton}) {
   return showDialog(context: context,
       builder: (context){
