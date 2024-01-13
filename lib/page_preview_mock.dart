@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:ritmos_de_violao_premium/models/ritmo.dart';
 import 'package:ritmos_de_violao_premium/styles/app_colors.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/styles/app_fonts.dart';
@@ -24,6 +25,7 @@ class _PagePreviewMockOpenUrlOnlyState extends State<PagePreviewMockOpenUrlOnly>
   int _stackIndex = 0;
   late String url;
   late String route;
+  late Ritmo ritmo;
   late WebViewController _webViewController;
 
   @override
@@ -36,7 +38,9 @@ class _PagePreviewMockOpenUrlOnlyState extends State<PagePreviewMockOpenUrlOnly>
           .settings.arguments as Map;
       route = map["route"] ?? "PAGE_HOME";
       url = map["url"] ?? "";
-
+      if(map["ritmo"] != null){
+        ritmo = map["ritmo"];
+      }
       _webViewController = WebViewController()
         ..setJavaScriptMode(JavaScriptMode.unrestricted)
         ..setBackgroundColor(const Color(0x00000000))
@@ -105,7 +109,7 @@ class _PagePreviewMockOpenUrlOnlyState extends State<PagePreviewMockOpenUrlOnly>
           child: LeadingCustom(
             color: ColorsApp.primary,
             onTap: (){
-              Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_HOME, (_) => false);
+              Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_CURSO_LEVADAS, (_) => false);
             },
           ),
         ) ,
@@ -129,8 +133,14 @@ class _PagePreviewMockOpenUrlOnlyState extends State<PagePreviewMockOpenUrlOnly>
                       child: Center(
                         child: GestureDetector(
                           onTap: () {
-                            Navigator.pop(context);
                             SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+                            if(route == "PAGE_DETALHES_LEVADA_LIST"){
+                              Navigator.pushReplacementNamed(context, AppRoutes.PAGE_DETAILS, arguments: ritmo);
+
+                              return;
+                            }
+                            Navigator.pushReplacementNamed(context, AppRoutes.PAGE_CURSO_LEVADAS);
 
                           },
                           child: Container(

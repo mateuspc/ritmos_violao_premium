@@ -71,7 +71,6 @@ void main() async {
                   AppRoutes.PAGE_RITMOS : (_) => PageRitmos(),
                   AppRoutes.PAGE_ACORDES : (_) => PageAcordes(),
                   AppRoutes.PAGE_CURSO_LEVADAS : (_) => PageCursoLevadas(),
-                  AppRoutes.PAGE_DETALHES_AULA_LEVADA : (_) => PageDetalhesAulaLevada(),
                   AppRoutes.PAGE_DEDILHADOS : (_) => PageDedilhados(),
                   AppRoutes.PAGE_DETALHES_DEDILHADOS : (_) => PageDetailsDedilhados(),
                   AppRoutes.PAGE_PREVIEW_MOCK_OPEN_URL_ONLY : (_) => PagePreviewMockOpenUrlOnly()

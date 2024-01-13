@@ -48,7 +48,6 @@ class _PageRitmosState extends State<PageRitmos> {
           case TypeReturnPurchase.NAO_TEM_OFERTA_DISPONIVEL:
             break;
           case TypeReturnPurchase.NAO_TEM_DIREITO_E_TEM_OFERTA:
-            var screenWidth = (window.physicalSize.shortestSide / window.devicePixelRatio);
             var screenHeight = (window.physicalSize.longestSide / window.devicePixelRatio);
             await showModalBottomSheet(
               useRootNavigator: true,
@@ -102,7 +101,7 @@ class _PageRitmosState extends State<PageRitmos> {
           colorLeadingIcon: Colors.blue,
           backgroundColor: Colors.white,
           onTapLeading: (){
-            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, AppRoutes.PAGE_HOME);
           }, title: "Levadas", onActionClicked: () {  }),
       body: StreamBuilder<bool>(
           initialData: true,
