@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ritmos_de_violao_premium/firebase_options.dart';
+import 'package:ritmos_de_violao_premium/page_preview_mock.dart';
 import 'package:ritmos_de_violao_premium/pages/autenticacao/page_cadastro.dart';
 import 'package:ritmos_de_violao_premium/pages/autenticacao/page_esqueci_minha_senha.dart';
 import 'package:ritmos_de_violao_premium/pages/autenticacao/page_login.dart';
@@ -70,9 +71,10 @@ void main() async {
                   AppRoutes.PAGE_RITMOS : (_) => PageRitmos(),
                   AppRoutes.PAGE_ACORDES : (_) => PageAcordes(),
                   AppRoutes.PAGE_CURSO_LEVADAS : (_) => PageCursoLevadas(),
-                  AppRoutes.PAGE_DETALHES_AULA_LEVADA : (_) => PageDetalhesAulaLevada(),
                   AppRoutes.PAGE_DEDILHADOS : (_) => PageDedilhados(),
-                  AppRoutes.PAGE_DETALHES_DEDILHADOS : (_) => PageDetailsDedilhados()
+                  AppRoutes.PAGE_DETALHES_DEDILHADOS : (_) => PageDetailsDedilhados(),
+                  AppRoutes.PAGE_PREVIEW_MOCK_OPEN_URL_ONLY : (_) => PagePreviewMockOpenUrlOnly()
+
                 },
               ),
             )

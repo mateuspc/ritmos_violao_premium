@@ -111,6 +111,7 @@ class _PageAcessarConteudoState extends State<PageAcessarConteudo> {
                                 conteudos: modulo.conteudos!,
                                 onTap: (content){
                                   Navigator.pushNamed(context, AppRoutes.PAGE_DETALHES_AULA, arguments: content);
+
                                 },
 
                                 onTapViewMore: (value) {

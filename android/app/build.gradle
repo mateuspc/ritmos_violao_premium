@@ -55,8 +55,8 @@ android {
         applicationId "br.com.devfull.cursodeviolao"
         minSdkVersion 21
         targetSdkVersion 33
-        versionCode 218
-        versionName '10.2.7'
+        versionCode 224
+        versionName '11.0.4'
         multiDexEnabled true
     }
 
