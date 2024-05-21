@@ -9,7 +9,7 @@ const footerText =
 Read more about this here: https://www.revenuecat.com/blog/schedule-2-section-3-8-b""";
 
 //TO DO: add the Apple API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
-const appleApiKey = 'appl_hrhWEmoUicPwpXTPbwbgWxSboee';
+const appleApiKey = 'appl_CqQkJhYxhTwYgwFvauLiOlnfoiA';
 
 //TO DO: add the Google API key for your app from the RevenueCat dashboard: https://app.revenuecat.com
 const googleApiKey = 'goog_PbFfvbGOPLootJLxzuqpDBxWahl';

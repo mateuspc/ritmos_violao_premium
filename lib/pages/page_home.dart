@@ -120,6 +120,31 @@ class _PageHomeState extends State<PageHome> {
           ),
           GestureDetector(
             onTap: (){
+              Navigator.pushNamed(context, AppRoutes.PAGE_DESTAQUES_CANAL);
+            },
+            child: Container(
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.black, width: 1),
+                  color: Colors.teal[800],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      height: 40,
+                        child: const Icon(FontAwesomeIcons.heart,
+                         color: Colors.white,),),
+                    SizedBox(height: getReferenceHeight(context) * 0.2,),
+                    Text("Destaques do canal", style: TextStyle(
+                        fontSize: getReferenceHeight(context) * 0.33,
+                        color: Colors.white
+                    ),
+                    overflow: TextOverflow.ellipsis,),
+                  ],
+                )),
+          ),
+          GestureDetector(
+            onTap: (){
               Navigator.pushNamed(context, AppRoutes.PAGE_MENU);
             },
             child: Container(

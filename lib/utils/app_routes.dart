@@ -26,6 +26,8 @@ class AppRoutes{
   static const PAGE_CURSO_LEVADAS = "/page_curso_levadas";
   static const PAGE_DEDILHADOS = "/page_dedilhados";
   static const PAGE_DETALHES_DEDILHADOS = "/page_detalhes_dedilhados";
+  static const PAGE_DESTAQUES_CANAL = "/page_destaques_canal";
+  static const PAGE_ASSINATURA = "/page_assinatura";
   static const PAGE_PREVIEW_MOCK_OPEN_URL_ONLY = "/page_preview_mock_open_url_only";
 
 }

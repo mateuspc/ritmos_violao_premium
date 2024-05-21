@@ -4,11 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ritmos_de_violao_premium/firebase_options.dart';
+import 'package:ritmos_de_violao_premium/pages/destaques/page_destaques_canal.dart';
 import 'package:ritmos_de_violao_premium/page_preview_mock.dart';
-import 'package:ritmos_de_violao_premium/pages/autenticacao/page_cadastro.dart';
-import 'package:ritmos_de_violao_premium/pages/autenticacao/page_esqueci_minha_senha.dart';
-import 'package:ritmos_de_violao_premium/pages/autenticacao/page_login.dart';
 import 'package:ritmos_de_violao_premium/pages/page_acordes.dart';
+import 'package:ritmos_de_violao_premium/pages/page_assinatura/page_assinatura.dart';
 import 'package:ritmos_de_violao_premium/pages/page_aula_detalhes/page_detalhes_aula.dart';
 import 'package:ritmos_de_violao_premium/pages/page_aula_detalhes/page_detalhes_aula_levada.dart';
 import 'package:ritmos_de_violao_premium/pages/page_campo_harmonico.dart';
@@ -65,16 +64,14 @@ void main() async {
                   AppRoutes.PAGE_CAMPO_HARMONICO : (_) => PageCampoHarmonico(),
                   AppRoutes.PAGE_MENU : (_) => PageMenu(),
                   AppRoutes.PAGE_DETALHES_AULA : (_) => PageDetalhesAula(),
-                  AppRoutes.PAGE_LOGIN : (_) => PageLogin(),
-                  AppRoutes.PAGE_CADASTRO : (_) => PageCadastro(),
-                  AppRoutes.PAGE_ESQUECI_MINHA_SENHA : (_) => PageEsqueciMinhaSenha(),
                   AppRoutes.PAGE_RITMOS : (_) => PageRitmos(),
                   AppRoutes.PAGE_ACORDES : (_) => PageAcordes(),
                   AppRoutes.PAGE_CURSO_LEVADAS : (_) => PageCursoLevadas(),
                   AppRoutes.PAGE_DEDILHADOS : (_) => PageDedilhados(),
                   AppRoutes.PAGE_DETALHES_DEDILHADOS : (_) => PageDetailsDedilhados(),
+                  AppRoutes.PAGE_DESTAQUES_CANAL : (_) => PageDestaquesCanal(),
+                  AppRoutes.PAGE_ASSINATURA : (_) => PageAssinatura(),
                   AppRoutes.PAGE_PREVIEW_MOCK_OPEN_URL_ONLY : (_) => PagePreviewMockOpenUrlOnly()
-
                 },
               ),
             )
