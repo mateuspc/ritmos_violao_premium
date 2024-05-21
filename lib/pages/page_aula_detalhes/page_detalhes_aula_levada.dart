@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:pod_player/pod_player.dart';
 import 'package:ritmos_de_violao_premium/models/video_aula.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
-import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
 import 'package:ritmos_de_violao_premium/widgets/leading_app_bar.dart';
 import 'package:ritmos_de_violao_premium/widgets/title_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';

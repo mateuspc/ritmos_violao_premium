@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:ritmos_de_violao_premium/firebase_options.dart';
 import 'package:ritmos_de_violao_premium/pages/destaques/page_destaques_canal.dart';
+import 'package:ritmos_de_violao_premium/page_preview_mock.dart';
 import 'package:ritmos_de_violao_premium/pages/page_acordes.dart';
 import 'package:ritmos_de_violao_premium/pages/page_assinatura/page_assinatura.dart';
 import 'package:ritmos_de_violao_premium/pages/page_aula_detalhes/page_detalhes_aula.dart';
@@ -66,11 +67,11 @@ void main() async {
                   AppRoutes.PAGE_RITMOS : (_) => PageRitmos(),
                   AppRoutes.PAGE_ACORDES : (_) => PageAcordes(),
                   AppRoutes.PAGE_CURSO_LEVADAS : (_) => PageCursoLevadas(),
-                  AppRoutes.PAGE_DETALHES_AULA_LEVADA : (_) => PageDetalhesAulaLevada(),
                   AppRoutes.PAGE_DEDILHADOS : (_) => PageDedilhados(),
                   AppRoutes.PAGE_DETALHES_DEDILHADOS : (_) => PageDetailsDedilhados(),
                   AppRoutes.PAGE_DESTAQUES_CANAL : (_) => PageDestaquesCanal(),
-                  AppRoutes.PAGE_ASSINATURA : (_) => PageAssinatura()
+                  AppRoutes.PAGE_ASSINATURA : (_) => PageAssinatura(),
+                  AppRoutes.PAGE_PREVIEW_MOCK_OPEN_URL_ONLY : (_) => PagePreviewMockOpenUrlOnly()
                 },
               ),
             )

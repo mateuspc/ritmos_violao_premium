@@ -112,7 +112,7 @@ class _PageCursoLevadasState extends State<PageCursoLevadas> {
           colorLeadingIcon: Colors.purple,
           backgroundColor: Colors.white,
           onTapLeading: () {
-            Navigator.pop(context);
+            Navigator.pushReplacementNamed(context, AppRoutes.PAGE_HOME);
           },
           title: "Curso de levadas",
           onActionClicked: () {}),
@@ -151,9 +151,11 @@ class _PageCursoLevadasState extends State<PageCursoLevadas> {
                                   child: InkWell(
                                     onTap: videoAula.emBreve ? null : () async {
                                       if(!videoAula.isLocked && !videoAula.emBreve){
-                                        Navigator.pushNamed(context,
-                                            AppRoutes.PAGE_DETALHES_AULA_LEVADA,
-                                            arguments: videoAula);
+                                        Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_PREVIEW_MOCK_OPEN_URL_ONLY, (_) => false,
+                                            arguments : {
+                                              'url' : videoAula.videoId,
+                                              'route' : 'PAGE_AULA_DETALHES_LEVADA'
+                                            });
                                       }
 
                                     },

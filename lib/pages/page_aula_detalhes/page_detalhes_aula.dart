@@ -9,6 +9,7 @@ import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/utils/enums.dart';
 import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class PageDetalhesAula extends StatefulWidget {
   const PageDetalhesAula({Key? key}) : super(key: key);
@@ -20,11 +21,11 @@ class PageDetalhesAula extends StatefulWidget {
 class _PageDetalhesAulaState extends State<PageDetalhesAula> {
 
   final firestoreRef = FirebaseFirestore.instance;
-  PodPlayerController? controller;
   bool firstAccess = true;
   int lastSended = -1;
   late Conteudo conteudo;
   DetailhesAulaBloc blocDetalhesAula = DetailhesAulaBloc();
+  late WebViewController _webViewController;
 
   @override
   void initState() {
@@ -37,42 +38,41 @@ class _PageDetalhesAulaState extends State<PageDetalhesAula> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    if(controller != null){
-      if(!controller!.isFullScreen){
-        SystemChrome.setPreferredOrientations([
-          DeviceOrientation.portraitUp,
-          DeviceOrientation.portraitDown,
-        ]);
-      }
-    }
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
 
     if(firstAccess){
       firstAccess = false;
       conteudo = ModalRoute.of(context)!.settings.arguments as Conteudo;
       blocDetalhesAula.getInfoVideoAtual(conteudo.uuid!);
 
-      controller = PodPlayerController(
-        playVideoFrom: getPlayVideoFrom(conteudo.url!.toString()),
-      )..initialise();
-      if(controller != null){
-        controller!.addListener((){
-          if(controller != null){
-            if(controller!.currentVideoPosition.inSeconds != lastSended){
-              lastSended = controller!.currentVideoPosition.inSeconds;
-            }
-          }
-        }
-        );
-      }
+      // conteudo.url!.toString()
+      _webViewController = WebViewController()
+        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setBackgroundColor(const Color(0x00000000))
+        ..setNavigationDelegate(
+          NavigationDelegate(
+            onProgress: (int progress) {
+              // Update loading bar.
+            },
+            onPageStarted: (String url) {},
+            onPageFinished: (String url) {},
+            onWebResourceError: (WebResourceError error) {},
+            onNavigationRequest: (NavigationRequest request) {
+              if (request.url.startsWith('https://www.youtube.com/')) {
+                return NavigationDecision.prevent;
+              }
+              return NavigationDecision.navigate;
+            },
+          ),
+        )
+        ..loadRequest(Uri.parse(conteudo.url.toString()));
 
     }
   }
 
-  PlayVideoFrom getPlayVideoFrom(String url) {
-    return url.contains("vimeo")?
-    PlayVideoFrom.vimeo(url.split("/").last) :
-    PlayVideoFrom.youtube(url);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -96,11 +96,10 @@ class _PageDetalhesAulaState extends State<PageDetalhesAula> {
                   colorLeadingIcon: Colors.blue,
                   backgroundColor: Colors.white,
                   onTapLeading: (){
-                    controller!.pause();
                     Navigator.pop(context);
                   }, title: "Voltar", onActionClicked: () {  }),
               SliverToBoxAdapter(
-                child: PodVideoPlayer(controller: controller!),
+                child: WebViewWidget(controller: _webViewController),
               ),
               SliverToBoxAdapter(
                 child: StreamBuilder<ApiResponse>(

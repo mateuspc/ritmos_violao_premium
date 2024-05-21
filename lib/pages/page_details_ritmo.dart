@@ -11,6 +11,7 @@ import 'package:ritmos_de_violao_premium/shapes/divisions_one_arrow_shape.dart';
 import 'package:ritmos_de_violao_premium/shapes/divisions_two_arrows_shape.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/styles/app_fonts.dart';
+import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
 import 'package:ritmos_de_violao_premium/widgets/leading_app_bar.dart';
 import 'package:ritmos_de_violao_premium/widgets/title_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -157,14 +158,21 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
                               },
                             ),
                           ),
-                          // Stack(
-                          //   alignment: AlignmentDirectional.topStart,
-                          //   children: [
-                          //     PodVideoPlayer(controller: controller),
-                          //   ],
-                          // ),
-
-                          SizedBox(height: size.height * 0.04),
+                     TextButton.icon(onPressed: () {
+                            Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_PREVIEW_MOCK_OPEN_URL_ONLY, (_) => false,
+                                arguments : {
+                                  'url' : _ritmo.videoViolaoId.isEmpty ? _ritmo.videoId : _ritmo.videoViolaoId,
+                                  'route' : 'PAGE_DETALHES_LEVADA_LIST',
+                                  'ritmo' : _ritmo
+                                });
+                          },
+                            icon: const Icon(Icons.play_circle_outline_rounded,
+                                color: Colors.blue),
+                            label: const Text('Assistir com play auternativo',
+                              style: TextStyle(
+                                color: Colors.blue
+                              ),),),
+                          const SizedBox(height: 10),
                           Wrap(
                             children: [
                               if(!_ritmo.isDedilhado)
