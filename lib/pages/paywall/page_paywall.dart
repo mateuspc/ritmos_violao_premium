@@ -134,14 +134,11 @@ class _PaywallState extends State<Paywall> {
               shrinkWrap: true,
               physics: const ClampingScrollPhysics(),
             ),
-             SizedBox(
-               height: getReferenceHeight(context),
-             ),
              Center(
                child: OutlinedButtonTheme(
                  data: OutlinedButtonThemeData(
                    style: ButtonStyle(
-                     surfaceTintColor: MaterialStateProperty.all(Colors.blue),
+                     surfaceTintColor: WidgetStateProperty.all(Colors.blue),
                    )
                  ),
                  child: OutlinedButton(
@@ -159,17 +156,31 @@ class _PaywallState extends State<Paywall> {
                      ),)),
                ),
              ),
+
+            Padding(
+              padding: const EdgeInsets.only(top: 10, bottom: 16, left: 16.0, right: 16.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: Theme.of(context).platform == TargetPlatform.iOS
+                    ? Text(
+                    "   Ao assinar, você concorda com os Termos de Uso do App Ritmos de violão e sua assinatura Acontinuará ativa até ser cancelada. Se não desejar continuar com a sua assinatura, você pode cancelara qualquer momento acessando suas assinaturas na sua conta Apple em Ajustes > ID Apple > Assinaturas .Se você cancelar sua assinatura Premium 24 horas antes de terminar o período de teste de 7 dias gratuito, você não será cobrado."
+                )
+                    : Text(
+                  "   Ao assinar, você concorda com os Termos de Uso do Ritmos de violão e sua assinatura  continuará ativa até ser cancelada. Se não desejar continuar com a sua assinatura, você pode cancela a qualquer momento acessando menu da Google Play Store uma sessão chamada Pagamentos e assinaturas. Se você cancelar sua assinatura Premium 24 horas antes de terminar o período de teste de 7 dias gratuito, você não será cobrado.",
+                ),
+              ),
+            ),
              Padding(
               padding:
-              const EdgeInsets.only(top: 32, bottom: 16, left: 16.0, right: 16.0),
+              const EdgeInsets.only(top: 10, bottom: 16, left: 16.0, right: 16.0),
               child: SizedBox(
                 width: double.infinity,
                 child: RichText(
                   text: TextSpan(
-                    text: "Ao concluir a compra você concorda com os nossos ",
+                    text: "",
                     style: TextStyle(
                       color: Colors.black,
-                      fontSize: getReferenceHeight(context) * 0.33
+                      fontSize: 16
                     ),
                     children: [
                       TextSpan(

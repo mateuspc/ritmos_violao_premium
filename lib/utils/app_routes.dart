@@ -27,5 +27,7 @@ class AppRoutes{
   static const PAGE_DETALHES_AULA_LEVADA = "/page_detalhes_aula_levada";
   static const PAGE_DEDILHADOS = "/page_dedilhados";
   static const PAGE_DETALHES_DEDILHADOS = "/page_detalhes_dedilhados";
+  static const PAGE_DESTAQUES_CANAL = "/page_destaques_canal";
+  static const PAGE_ASSINATURA = "/page_assinatura";
 
 }

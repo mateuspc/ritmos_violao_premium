@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:pod_player/pod_player.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:ritmos_de_violao_premium/models/division.dart';
 import 'package:ritmos_de_violao_premium/models/ritmo.dart';
 import 'package:ritmos_de_violao_premium/shapes/custom_list_type_indicator.dart';
@@ -10,6 +13,7 @@ import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/styles/app_fonts.dart';
 import 'package:ritmos_de_violao_premium/widgets/leading_app_bar.dart';
 import 'package:ritmos_de_violao_premium/widgets/title_app_bar.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 
 class PageDetails extends StatefulWidget {
@@ -26,21 +30,26 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
    bool isPlaying = false;
   late Ritmo _ritmo;
   int positionAnterior = -2;
-  late PodPlayerController controller;
   bool firstAccess = true;
+  InAppWebViewController? webViewController;
+  final Completer<WebViewController> _webViewController = Completer<WebViewController>();
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-
       _ritmo = ModalRoute.of(context)!.settings.arguments as Ritmo;
-      controller = PodPlayerController(
-        playVideoFrom: PlayVideoFrom.youtube(_ritmo.videoViolaoId.isEmpty ? _ritmo.videoId : _ritmo.videoViolaoId),
-      )..initialise();
 
   }
+   // in app webview
+   final GlobalKey webViewKey = GlobalKey();
 
+
+   PullToRefreshController? pullToRefreshController;
+   late ContextMenu contextMenu;
+   String url = "";
+   double progress = 0;
+   final urlController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +68,6 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
             toolbarHeight: getToolbarHeight(context),
             leading: LeadingAppBar(onPressed: (){
              // showAd();
-              controller.pause();
               Navigator.pop(context);
             }),
             title: TitleAppBar(title: _ritmo.apelido),
@@ -79,12 +87,83 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
                       padding:  EdgeInsets.zero,
                       child: ListView(
                         children: [
-                          Stack(
-                            alignment: AlignmentDirectional.topStart,
-                            children: [
-                              PodVideoPlayer(controller: controller),
-                            ],
+                          Container(
+                            height: 220,
+                            child: InAppWebView(
+                              key: webViewKey,
+                              initialData: InAppWebViewInitialData(
+                                  data: """
+                                  <iframe width="100%" height="100%" src="https://www.youtube.com/embed/${_ritmo.videoViolaoId.isEmpty ? _ritmo.videoId : _ritmo.videoViolaoId}" 
+                                  title="YouTube video player" 
+                                  frameborder="0"
+                                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                                  """
+                              ),
+                              pullToRefreshController: pullToRefreshController,
+                              onEnterFullscreen: (value){
+                                SystemChrome.setPreferredOrientations([
+                                  DeviceOrientation.landscapeRight,
+                                  DeviceOrientation.landscapeLeft,
+                                ]);
+                              },
+                              onExitFullscreen: (value){
+                                SystemChrome.setPreferredOrientations([
+                                  DeviceOrientation.portraitUp,
+                                  DeviceOrientation.portraitDown,
+                                ]);
+                              },
+                              onWebViewCreated: (controller) async {
+                                webViewController = controller;
+
+                                print(await controller.getUrl());
+                              },
+                              onLoadStart: (controller, url) async {
+                                setState(() {
+                                  this.url = url.toString();
+                                  urlController.text = this.url;
+                                });
+                              },
+                              shouldOverrideUrlLoading:
+                                  (controller, navigationAction) async {
+                                var uri = navigationAction.request.url!;
+
+
+                                return NavigationActionPolicy.ALLOW;
+                              },
+                              onLoadStop: (controller, url) async {
+                                pullToRefreshController?.endRefreshing();
+                                setState(() {
+                                  this.url = url.toString();
+                                  urlController.text = this.url;
+                                });
+                              },
+                              onProgressChanged: (controller, progress) {
+                                if (progress == 100) {
+                                  pullToRefreshController?.endRefreshing();
+                                }
+                                setState(() {
+                                  this.progress = progress / 100;
+                                  urlController.text = this.url;
+                                });
+                              },
+                              onUpdateVisitedHistory: (controller, url, isReload) {
+                                setState(() {
+                                  this.url = url.toString();
+                                  urlController.text = this.url;
+                                });
+                              },
+                              onConsoleMessage: (controller, consoleMessage) {
+                                print(consoleMessage);
+                              },
+                            ),
                           ),
+                          // Stack(
+                          //   alignment: AlignmentDirectional.topStart,
+                          //   children: [
+                          //     PodVideoPlayer(controller: controller),
+                          //   ],
+                          // ),
+
                           SizedBox(height: size.height * 0.04),
                           Wrap(
                             children: [
@@ -96,7 +175,7 @@ class _PageDetailsState extends State<PageDetails> with WidgetsBindingObserver{
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children:
-                                    _getDivisionsWithSpace(_ritmo.divisionsRitmo as List<Division>, size),
+                                    _getDivisionsWithSpace(_ritmo.divisionsRitmo, size),
                                   ),
                                 ],)
                           else Container(

@@ -32,8 +32,6 @@ class BlocPageSplash {
     sinkLoading.add(true);
     try{
 
-      await Purchases.setDebugLogsEnabled(true);
-
       late PurchasesConfiguration configuration;
       if (Platform.isAndroid) {
         configuration = PurchasesConfiguration(googleApiKey);

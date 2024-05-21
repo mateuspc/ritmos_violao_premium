@@ -12,12 +12,6 @@
 @import cloud_firestore;
 #endif
 
-#if __has_include(<firebase_auth/FLTFirebaseAuthPlugin.h>)
-#import <firebase_auth/FLTFirebaseAuthPlugin.h>
-#else
-@import firebase_auth;
-#endif
-
 #if __has_include(<firebase_core/FLTFirebaseCorePlugin.h>)
 #import <firebase_core/FLTFirebaseCorePlugin.h>
 #else
@@ -30,26 +24,14 @@
 @import firebase_storage;
 #endif
 
-#if __has_include(<flutter_facebook_auth/FlutterFacebookAuthPlugin.h>)
-#import <flutter_facebook_auth/FlutterFacebookAuthPlugin.h>
+#if __has_include(<flutter_inappwebview_ios/InAppWebViewFlutterPlugin.h>)
+#import <flutter_inappwebview_ios/InAppWebViewFlutterPlugin.h>
 #else
-@import flutter_facebook_auth;
+@import flutter_inappwebview_ios;
 #endif
 
-#if __has_include(<flutter_secure_storage/FlutterSecureStoragePlugin.h>)
-#import <flutter_secure_storage/FlutterSecureStoragePlugin.h>
-#else
-@import flutter_secure_storage;
-#endif
-
-#if __has_include(<google_sign_in_ios/FLTGoogleSignInPlugin.h>)
-#import <google_sign_in_ios/FLTGoogleSignInPlugin.h>
-#else
-@import google_sign_in_ios;
-#endif
-
-#if __has_include(<package_info_plus/FLTPackageInfoPlusPlugin.h>)
-#import <package_info_plus/FLTPackageInfoPlusPlugin.h>
+#if __has_include(<package_info_plus/FPPPackageInfoPlusPlugin.h>)
+#import <package_info_plus/FPPPackageInfoPlusPlugin.h>
 #else
 @import package_info_plus;
 #endif
@@ -66,16 +48,10 @@
 @import purchases_flutter;
 #endif
 
-#if __has_include(<share_plus/FLTSharePlusPlugin.h>)
-#import <share_plus/FLTSharePlusPlugin.h>
+#if __has_include(<share_plus/FPPSharePlusPlugin.h>)
+#import <share_plus/FPPSharePlusPlugin.h>
 #else
 @import share_plus;
-#endif
-
-#if __has_include(<sign_in_with_apple/SignInWithApplePlugin.h>)
-#import <sign_in_with_apple/SignInWithApplePlugin.h>
-#else
-@import sign_in_with_apple;
 #endif
 
 #if __has_include(<sqflite/SqflitePlugin.h>)
@@ -84,22 +60,22 @@
 @import sqflite;
 #endif
 
-#if __has_include(<url_launcher_ios/FLTURLLauncherPlugin.h>)
-#import <url_launcher_ios/FLTURLLauncherPlugin.h>
+#if __has_include(<url_launcher_ios/URLLauncherPlugin.h>)
+#import <url_launcher_ios/URLLauncherPlugin.h>
 #else
 @import url_launcher_ios;
 #endif
 
-#if __has_include(<video_player_avfoundation/FLTVideoPlayerPlugin.h>)
-#import <video_player_avfoundation/FLTVideoPlayerPlugin.h>
+#if __has_include(<video_player_avfoundation/FVPVideoPlayerPlugin.h>)
+#import <video_player_avfoundation/FVPVideoPlayerPlugin.h>
 #else
 @import video_player_avfoundation;
 #endif
 
-#if __has_include(<wakelock/WakelockPlugin.h>)
-#import <wakelock/WakelockPlugin.h>
+#if __has_include(<wakelock_plus/WakelockPlusPlugin.h>)
+#import <wakelock_plus/WakelockPlusPlugin.h>
 #else
-@import wakelock;
+@import wakelock_plus;
 #endif
 
 #if __has_include(<webview_flutter_wkwebview/FLTWebViewFlutterPlugin.h>)
@@ -112,21 +88,17 @@
 
 + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
   [FLTFirebaseFirestorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseFirestorePlugin"]];
-  [FLTFirebaseAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAuthPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseStoragePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseStoragePlugin"]];
-  [FlutterFacebookAuthPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterFacebookAuthPlugin"]];
-  [FlutterSecureStoragePlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSecureStoragePlugin"]];
-  [FLTGoogleSignInPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTGoogleSignInPlugin"]];
-  [FLTPackageInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPackageInfoPlusPlugin"]];
+  [InAppWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"InAppWebViewFlutterPlugin"]];
+  [FPPPackageInfoPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPPackageInfoPlusPlugin"]];
   [PathProviderPlugin registerWithRegistrar:[registry registrarForPlugin:@"PathProviderPlugin"]];
   [PurchasesFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"PurchasesFlutterPlugin"]];
-  [FLTSharePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharePlusPlugin"]];
-  [SignInWithApplePlugin registerWithRegistrar:[registry registrarForPlugin:@"SignInWithApplePlugin"]];
+  [FPPSharePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPSharePlusPlugin"]];
   [SqflitePlugin registerWithRegistrar:[registry registrarForPlugin:@"SqflitePlugin"]];
-  [FLTURLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTURLLauncherPlugin"]];
-  [FLTVideoPlayerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTVideoPlayerPlugin"]];
-  [WakelockPlugin registerWithRegistrar:[registry registrarForPlugin:@"WakelockPlugin"]];
+  [URLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"URLLauncherPlugin"]];
+  [FVPVideoPlayerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FVPVideoPlayerPlugin"]];
+  [WakelockPlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"WakelockPlusPlugin"]];
   [FLTWebViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTWebViewFlutterPlugin"]];
 }
 

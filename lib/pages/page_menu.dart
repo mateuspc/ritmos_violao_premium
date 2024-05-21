@@ -1,12 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:ritmos_de_violao_premium/pages/termos_e_politicas/models/abrir_link_webview_model.dart';
 import 'package:ritmos_de_violao_premium/styles/app_dimens.dart';
 import 'package:ritmos_de_violao_premium/utils/app_routes.dart';
 import 'package:ritmos_de_violao_premium/widgets/custom_toolbar.dart';
-import 'package:ritmos_de_violao_premium/widgets/leading_app_bar.dart';
-import 'package:ritmos_de_violao_premium/widgets/title_app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../utils/funcoes_menu.dart';
@@ -85,18 +82,16 @@ class _PageMenuState extends State<PageMenu> {
           SliverToBoxAdapter(
             child: SizedBox(height: getReferenceHeight(context) * 0.22,),
           ),
-          // SliverToBoxAdapter(
-          //   child: ListTileMenuCustom(title: 'Sair', iconLeading: Icons.exit_to_app,
-          //     onTap: (){
-          //       _showDialogExitApp(context, title: 'Deslogar',
-          //         subtitle: "Deseja realmente deslogar da conta atual?",
-          //         onTapPositiveButton: (){
-          //           FirebaseAuth.instance.signOut();
-          //           Navigator.pushNamedAndRemoveUntil(context, AppRoutes.PAGE_LOGIN, (route) => false);
-          //         });
-          //     },
-          //   ),
-          // ),
+          SliverToBoxAdapter(
+            child: ListTileMenuCustom(title: 'Assinatura', iconLeading: Icons.workspace_premium,
+              onTap: (){
+                 Navigator.pushNamed(context, AppRoutes.PAGE_ASSINATURA);
+              },
+            ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: getReferenceHeight(context) * 0.22,),
+          ),
 
         ],
       ),
